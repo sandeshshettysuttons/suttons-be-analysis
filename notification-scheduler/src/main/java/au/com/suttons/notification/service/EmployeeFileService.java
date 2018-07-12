@@ -2,9 +2,11 @@ package au.com.suttons.notification.service;
 
 
 import au.com.suttons.notification.bean.EmployeeFileDetailBean;
+import au.com.suttons.notification.data.dao.CompanyDao;
 import au.com.suttons.notification.data.dao.EmployeeDao;
 import au.com.suttons.notification.data.dao.EmployeeFileDao;
 import au.com.suttons.notification.data.dao.EmployeeFileDetailDao;
+import au.com.suttons.notification.data.entity.CompanyEntity;
 import au.com.suttons.notification.data.entity.EmployeeEntity;
 import au.com.suttons.notification.data.entity.EmployeeFileDetailEntity;
 import au.com.suttons.notification.data.entity.EmployeeFileEntity;
@@ -36,6 +38,9 @@ public class EmployeeFileService
 
     @EJB
     private EmployeeDao employeeDao;
+
+    @EJB
+    private CompanyDao companyDao;
 
     public void readEmployeeFiles() throws IOException {
 
@@ -120,7 +125,26 @@ public class EmployeeFileService
 
         employee.setLastUpdatedBy(employeeFileDetail.getLastUpdatedBy());
 
+        employee.setCompany(
+                updateCompanies(employee));
+
         this.employeeDao.saveAndFlush(employee);
+    }
+
+    public CompanyEntity updateCompanies(EmployeeEntity employee) {
+
+        CompanyEntity company = companyDao.findByName(employee.getDescription());
+
+        if (company == null) {
+            company = new CompanyEntity();
+            company.setName(employee.getDescription());
+            company.setStatus(JobConstants.STATUS_ACTIVE);
+            company.setLastUpdatedBy(employee.getLastUpdatedBy());
+
+            company = this.companyDao.saveAndFlush(company);
+        }
+
+        return company;
     }
 
 }

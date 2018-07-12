@@ -4,7 +4,7 @@
       <jta-data-source>java:/jdbc/NotificationDataSource</jta-data-source>
       <properties>
           <property name="javax.persistence.schema-generation.scripts.action" value="create"/>
-          <property name="javax.persistence.schema-generation.scripts.create-target" value="create-en-${version.number}.ddl"/>
+          <property name="javax.persistence.schema-generation.scripts.create-target" value="create-notification-${version.number}.ddl"/>
           <property name="hibernate.default_schema" value="notification"/>
           <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
           <property name="hibernate.show_sql" value="true"/>

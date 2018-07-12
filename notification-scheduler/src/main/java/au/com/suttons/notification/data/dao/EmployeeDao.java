@@ -45,6 +45,21 @@ public class EmployeeDao extends BaseDao<EmployeeEntity>
         }
     }
 
+    public List<EmployeeEntity> findByCompany(Long companyId) {
+        String sql = "SELECT  e FROM EmployeeEntity e INNER JOIN e.company c WHERE e.status = :activeStatus AND e.terminationDate IS NOT NULL AND c.id =: companyId ORDER BY e.terminationDate";
+
+        try {
+
+            return this.entityManager.createQuery(sql, EmployeeEntity.class)
+                    .setParameter("activeStatus", JobConstants.STATUS_ACTIVE)
+                    .setParameter("companyId", companyId)
+                    .getResultList();
+
+        } catch(NoResultException e) {
+            return null;
+        }
+    }
+
     public EmployeeEntity saveAndFlush(EmployeeEntity entity) {
         if(entity.getId() != null) {
             this.entityManager.merge(entity);

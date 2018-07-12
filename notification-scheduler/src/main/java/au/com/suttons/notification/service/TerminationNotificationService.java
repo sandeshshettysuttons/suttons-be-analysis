@@ -42,36 +42,50 @@ public class TerminationNotificationService
 
         // Step 1 : Find mail recipients to whom notifications need to be sent
         List<MailRecipientEntity> mailRecipients = this.mailRecipientDao.findAllActive();
+        List<EmployeeEntity> allEmployees = this.employeeDao.findAllActive();
 
-        // Step 2 : Find employees who are being terminated
-        List<EmployeeEntity> employees = this.employeeDao.findAllActive();
+        if (mailRecipients != null) {
 
-        if (CollectionUtils.isNotEmpty(mailRecipients) && CollectionUtils.isNotEmpty(employees)) {
+            for (MailRecipientEntity mailRecipient: mailRecipients) {
 
-            TerminationNotificationBean terminationNotification = new TerminationNotificationBean();
+                // Step 2 : Find employees who are being terminated
+                List<EmployeeEntity> employees = null;
 
-            // Step 3 : Group employees by time to termination date
-            populateTerminationEmployeeDetails(notificationType, terminationNotification, employees);
+                if (JobConstants.MAIL_RECIPIENT_TYPE_GLOBAL.equals(mailRecipient.getType())) {
 
-            // Step 4 : Send email
-            if (CollectionUtils.isNotEmpty(terminationNotification.getEmployeeGroups())) {
+                    employees = allEmployees;
 
-                for (MailRecipientEntity mailRecipient : mailRecipients) {
+                } else  if (mailRecipient.getCompany() != null) {
 
-                    terminationNotification.setMailRecipientName(mailRecipient.getName());
-                    terminationNotification.setMailRecipientEmail(mailRecipient.getEmail());
-
-                    try {
-                        this.emailService.sendTerminationNotification(terminationNotification);
-                        this.emailService.saveEmailLogs(mailRecipient, terminationNotification, JobConstants.STATUS_SENT);
-
-                    } catch (Exception ex) {
-                        logger.error("Exception while attempting to send termination notification.", ex);
-                        this.emailService.saveEmailLogs(mailRecipient, terminationNotification, JobConstants.STATUS_ERROR);
-                    }
-
+                    employees = filterEmployeesByCompany(allEmployees, mailRecipient.getCompany().getId());
                 }
+
+                if (CollectionUtils.isNotEmpty(employees)) {
+
+                    TerminationNotificationBean terminationNotification = new TerminationNotificationBean();
+
+                    // Step 3 : Group employees by time to termination date
+                    populateTerminationEmployeeDetails(notificationType, terminationNotification, employees);
+
+                    // Step 4 : Send email
+                    if (CollectionUtils.isNotEmpty(terminationNotification.getEmployeeGroups())) {
+
+                        terminationNotification.setMailRecipientName(mailRecipient.getName());
+                        terminationNotification.setMailRecipientEmail(mailRecipient.getEmail());
+
+                        try {
+                            this.emailService.sendTerminationNotification(terminationNotification);
+                            this.emailService.saveEmailLogs(mailRecipient, terminationNotification, JobConstants.STATUS_SENT);
+
+                        } catch (Exception ex) {
+                            logger.error("Exception while attempting to send termination notification.", ex);
+                            this.emailService.saveEmailLogs(mailRecipient, terminationNotification, JobConstants.STATUS_ERROR);
+                        }
+                    }
+                }
+
             }
+
         }
     }
 
@@ -136,6 +150,22 @@ public class TerminationNotificationService
         bean.setStatus(entity.getStatus());
 
         return bean;
+    }
+
+    private List<EmployeeEntity> filterEmployeesByCompany(List<EmployeeEntity> employees, Long companyId) {
+
+        List<EmployeeEntity> filteredList = new ArrayList<>();
+
+        for (EmployeeEntity employee : employees) {
+
+            if (employee.getCompany() != null
+                    && companyId.equals(employee.getCompany().getId())) {
+
+                filteredList.add(employee);
+            }
+        }
+
+        return filteredList;
     }
 
 }

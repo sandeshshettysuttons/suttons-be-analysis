@@ -2,6 +2,18 @@
 --  Notification Tables
 -- --------------------------------
 
+CREATE TABLE notification.company (
+    id                BIGINT NOT NULL AUTO_INCREMENT,
+    CREATEDBY         BIGINT NOT NULL,
+    CREATIONTS        DATETIME NOT NULL,
+    LASTUPDATETS      DATETIME NOT NULL,
+    LASTUPDATEDBY     BIGINT NOT NULL,
+    VERSION           BIGINT DEFAULT 1 NOT NULL,
+    NAME              VARCHAR(200) NOT NULL,
+    STATUS            VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE notification.emaillog (
     id                  BIGINT NOT NULL AUTO_INCREMENT,
     createdby           BIGINT NOT NULL,
@@ -41,6 +53,7 @@ CREATE TABLE notification.employee (
     position          VARCHAR(50),
     status            VARCHAR(20) NOT NULL,
     terminationdate   DATE,
+    company_id        BIGINT,
     PRIMARY KEY (id)
 );
 
@@ -84,7 +97,9 @@ CREATE TABLE notification.mailrecipient (
     version             BIGINT DEFAULT 1 NOT NULL,
     email               VARCHAR(100) NOT NULL,
     name                VARCHAR(100),
+    type                VARCHAR(20) NOT NULL,
     status              VARCHAR(20) NOT NULL,
+    company_id          BIGINT,
     PRIMARY KEY (id)
 );
 
@@ -114,7 +129,15 @@ ALTER TABLE notification.emaillogemployee
     ADD CONSTRAINT fk_emaillogemployee_employee
     FOREIGN KEY (employee_id) REFERENCES notification.employee (id);
 
+ALTER TABLE notification.employee
+    ADD CONSTRAINT fk_employee_company
+    FOREIGN KEY (company_id) REFERENCES notification.company (id);
+
 ALTER TABLE notification.employeefiledetail
     ADD CONSTRAINT fk_employeefiledetail_employeefile
     FOREIGN KEY (employeefile_id) REFERENCES notification.employeefile (id);
+
+ALTER TABLE notification.mailrecipient
+    ADD CONSTRAINT fk_mailrecipient_company
+    FOREIGN KEY (company_id) REFERENCES notification.company (id);
 

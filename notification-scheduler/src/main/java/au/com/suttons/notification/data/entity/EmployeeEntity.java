@@ -31,6 +31,10 @@ public class EmployeeEntity extends BaseEntity {
 	@Column(name = "STATUS", nullable=false, length=20)
 	private String status;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EMPLOYEE_COMPANY"))
+	private CompanyEntity company;
+
 	public String getEmployeeNumber() {
 		return employeeNumber;
 	}
@@ -85,5 +89,13 @@ public class EmployeeEntity extends BaseEntity {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public CompanyEntity getCompany() {
+		return company;
+	}
+
+	public void setCompany(CompanyEntity company) {
+		this.company = company;
 	}
 }

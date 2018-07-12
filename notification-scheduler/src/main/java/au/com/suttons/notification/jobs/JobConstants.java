@@ -12,6 +12,9 @@ public class JobConstants
     public static final String STATUS_SENT = "SENT";
     public static final String STATUS_ERROR = "ERROR";
 
+    public static final String MAIL_RECIPIENT_TYPE_GLOBAL = "GLOBAL";
+    public static final String MAIL_RECIPIENT_TYPE_COMPANY = "COMPANY";
+
     public static final Long USER_SYSTEM = new Long(0);
 
 }
