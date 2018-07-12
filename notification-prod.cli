@@ -1,0 +1,83 @@
+##Define system variables
+if (outcome == failed) of /subsystem=naming/binding=java\:global\/notification\/properties:read-resource
+     /subsystem=naming/binding=java\:global\/notification\/properties:add(binding-type=object-factory,module=net.flexoptix.jbossTools, class=net.flexoptix.jbossTools.PropertiesFactory)
+end-if
+
+ /subsystem=naming/binding=java\:global\/notification\/properties:write-attribute(name=environment, \
+		value=[ \
+				NOTIFICATION_WEB_BASE_API_URL="http://sapp/notification-api/api", \
+				NOTIFICATION_BASE_API_URL="http://sapp/notification/api", \
+				NOTIFICATION_MAIL_SMTP_STARTTLS_ENABLE="false", \
+				NOTIFICATION_MAIL_SMTP_PORT="25", \
+				NOTIFICATION_MAIL_SYSTEM_TO_ADDRESS="nirmala.batuwitage@suttons.com.au,teddy.wong@suttons.com.au", \
+				NOTIFICATION_MAIL_SYSTEM_FROM_ADDRESS="notification.noreply@suttons.com.au", \
+				NOTIFICATION_MAIL_TRANSPORT_PROTOCAL="smtp", \
+				NOTIFICATION_MAIL_HOST_ADDRESS="10.0.0.110", \
+				NOTIFICATION_AUDIT_LOG_TYPES="*", \
+				NOTIFICATION_AUDIT_LOG_TYPES_SAVE="LOGIN,LOGOUT,ADD,UPDATE,DISABLE,ENABLE,DELETE,EMAIL,REPORT,ATTACHMENT,DOWNLOAD,UPLOAD,REJECT,APPROVE,CANCEL,AUDIT", \
+				NOTIFICATION_AUDIT_LOG_TYPES_DISPLAY="*", \
+				NOTIFICATION_EMAIL_TEMPLATE_LOCATION="\\\\10.0.0.163\\notification\\PROD\\mailTemplate", \
+				NOTIFICATION_NETWORK_FILE_STORAGE_LOCATION="\\\\10.0.0.163\\notification\\PROD", \
+                EMPLOYEE_FILE_READ_CRON_EXPRESSION_KEY="0 */5 6-20 * * *", \
+                TERMINATION_NOTIFICATION_DAILY_CRON_EXPRESSION_KEY="0 0 6 * * *", \
+                TERMINATION_NOTIFICATION_WEEKLY_CRON_EXPRESSION_KEY="0 0 6 * * Mon", \
+			])
+
+# Create jms-queue
+if (outcome == failed) of /subsystem=messaging/hornetq-server=default/jms-queue=MonthendInvoiceCreationQueue:read-resource
+     /subsystem=messaging/hornetq-server=default/jms-queue=MonthendInvoiceCreationQueue:add(entries=["java:/jms/queue/MonthendInvoiceCreationQueue"])
+end-if
+
+# Create drivers
+if (outcome == failed) of /subsystem=datasources/jdbc-driver=as400:read-resource
+     /subsystem=datasources/jdbc-driver=as400:add(driver-module-name=com.ibm.as400,driver-name=as400,driver-class-name=com.ibm.as400.access.AS400JDBCDriver,driver-xa-datasource-class-name=com.ibm.as400.access.AS400JDBCXADataSource)
+end-if
+if (outcome == failed) of /subsystem=datasources/jdbc-driver=com.mysql.jdbc:read-resource
+     /subsystem=datasources/jdbc-driver=com.mysql.jdbc:add(driver-module-name=com.mysql.jdbc,driver-name=com.mysql.jdbc,driver-class-name=com.mysql.jdbc.Driver)
+end-if
+
+# Define data sources
+if (outcome == failed) of /subsystem=datasources/data-source=NotificationDataSource:read-resource()
+    /subsystem=datasources/data-source=NotificationDataSource:add(driver-name="com.mysql.jdbc")
+end-if
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=driver-name,value="com.mysql.jdbc")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=jndi-name,value="java:/jdbc/NotificationDataSource")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=jta,value="true")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=enabled,value="true")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=connection-url,value="jdbc:mysql://10.0.0.188:3306/notification")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=transaction-isolation,value="TRANSACTION_READ_COMMITTED")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=min-pool-size,value="1")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=max-pool-size,value="5")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=user-name,value="root")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=password,value="password")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=valid-connection-checker-class-name,value="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker")
+/subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=exception-sorter-class-name,value="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter")
+
+if (outcome == failed) of /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400:read-resource
+    /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400:add( \
+        driver-name="as400", \
+        jndi-name="java:/jdbc/DB2STARDataSource_AS400", \
+        user-name="starftp", \
+        password="transfer", \
+        use-ccm="false", \
+        xa-datasource-class="com.ibm.as400.access.AS400JDBCXADataSource", \
+        transaction-isolation="TRANSACTION_READ_COMMITTED", \
+        min-pool-size="5", \
+        initial-pool-size="5", \
+        flush-strategy="FailingConnectionOnly", \
+        max-pool-size="30", \
+        interleaving="false", \
+        wrap-xa-resource="true", \
+        same-rm-override="false", \
+        interliving="false", \
+        pad-xid="false", \
+        wrap-xa-datasource="true", \
+        validate-on-match="false", \
+        background-validation="false", \
+        prepared-statements-cache-size="10", \
+        share-prepared-statements="true" \
+    )
+    /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400/xa-datasource-properties=ServerName:add(value=zaphod)
+    /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400/xa-datasource-properties=DateFormat:add(value=iso)
+
+end-if
