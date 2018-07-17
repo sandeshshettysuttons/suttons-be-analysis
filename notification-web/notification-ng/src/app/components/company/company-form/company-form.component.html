@@ -1,0 +1,71 @@
+<div id="main">
+
+  <div class="pageHeader">
+    <div class="formTitle">{{pageTitle}}</div>
+  </div>
+
+  <div class="mainContainer">
+
+    <div class="validation-message" *ngIf="errorHappend">
+      <div class="inner">
+        <h3>
+          <span>There was a problem saving the details.</span>
+          <span *ngIf="errors.length > 0"> Please check the following issue(s) below.</span>
+        </h3>
+        <ul *ngIf="errors.length > 0">
+          <li *ngFor="let message of errors">
+            {{message}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formWrapper">
+
+      <form #companyForm="ngForm" (ngSubmit)="save()">
+
+        <div class="sectionTitle">Company Details</div>
+
+        <div class="detailsContainer">
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Name</label>
+                <data *ngIf="!editMode">{{company.name}}</data>
+                <input *ngIf="editMode" type="text" id="name" name="name" [(ngModel)]="company.name" required class="input-long">
+                <span *ngIf="editMode && formErrors.name" class="alert-error">{{ formErrors.name }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Status</label>
+                <data *ngIf="!editMode">{{company.status}}</data>
+                <select *ngIf="editMode" id="status" name="status" [(ngModel)]="company.status" required class="input-medium">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let t of statusList" [ngValue]="t.value">{{t.label}}</option>
+                </select>
+                <span *ngIf="editMode && formErrors.status" class="alert-error">{{ formErrors.status }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="addFooter">
+          <div class="submitButtons">
+            <span class="btn-link" (click)="back()">Back</span>
+            <input *ngIf="editMode" type="submit" class="btn-primary right" value="Save Company" />
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+

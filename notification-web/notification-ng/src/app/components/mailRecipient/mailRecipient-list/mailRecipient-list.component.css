@@ -1,0 +1,26 @@
+.colName{
+  width: 150px;
+}
+.colEmail{
+  width: 200px;
+}
+.colType{
+  width: 100px;
+}
+.colCompany{
+  width: 275px;
+}
+.colActive{
+  width: 72px;
+  text-align: center;
+}
+
+.input-small{
+  width:75px;
+}
+.input-medium{
+  width: 220px;
+}
+.input-address {
+  width:200px;
+}

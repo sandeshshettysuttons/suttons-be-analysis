@@ -1,0 +1,80 @@
+<div id="main">
+
+  <div class="main-inner">
+
+    <div class="header">
+      <h2>Company List</h2>
+      <a *ngIf="canAddDepartment()" class="btn-primary" routerLink="/department/new">Add Company</a>
+      <span class="btn-primary" (click)="newSearch()">New Search</span>
+    </div>
+
+    <div class="search-results" *ngIf="!showSearchPanel">
+      Showing results for:
+      <span>
+          <strong>Code/Name</strong> {{ searchCriteria.typeahead ? searchCriteria.typeahead : 'Any' }}
+          <strong>Active:</strong> {{ searchCriteria.isActive ? 'Active Only' : 'All' }}
+        </span>
+    </div>
+
+    <div class="search-panel" *ngIf="showSearchPanel">
+      <div class="border">
+
+        <div class="clearfix">
+          <div class="left">
+            <label class="labelText">Code/Name:</label>
+            <input type="text" [(ngModel)]="searchCriteria.typeahead" placeholder="Code or Name" >
+          </div>
+          <div class="right">
+            <label class="labelText">Active Only:</label>
+            <input type="checkbox" class="inputCheckbox" [(ngModel)]="searchCriteria.isActive" />
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <div class="search">
+            <span class="btn-primary" (click)="search()">Search</span>
+            <span class="btn-link" (click)="cancelSearch()">Cancel</span>
+            <span class="btn-link" (click)="resetCriteria()">Reset</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tableControls">
+
+      <div>
+        <ul class="rowHeader">
+          <li class="colCode"><a class="sortLink" (click)="reverse=!reverse;order('code', reverse)">Code</a></li>
+          <li class="colName"><a class="sortLink" (click)="reverse=!reverse;order('name', reverse)">Name</a></li>
+          <li class="colActive">Active</li>
+        </ul>
+      </div>
+
+      <div *ngIf="departments?.length > 0; else no_data_templ" infiniteScroll (scrolled)="displayMoreItems()" [infiniteScrollDistance]="1">
+        <div *ngFor="let department of departments" >
+          <a class="rowLink" [routerLink]="['/department', department.id]">
+            <ul class="rowList">
+              <li class="colCode">{{department.code}}</li>
+              <li class="colName">{{department.name}}</li>
+              <li class="colActive">
+                <span *ngIf="department.isActive">&#10004;</span>
+              </li>
+            </ul>
+          </a>
+        </div>
+      </div>
+
+      <spinner [visible]="searching"></spinner>
+
+      <ng-template #no_data_templ>
+        <div class="noResult">
+          No results found
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</div>

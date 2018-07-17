@@ -1,0 +1,35 @@
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-activity" (panelChange)="beforeChange($event)">
+  <ngb-panel title="View Audit Logs">
+    <ng-template ngbPanelContent>
+
+      <div class="tableControls">
+
+        <div>
+          <ul class="rowHeader">
+            <li class="auditLogTimestamp">Date</li>
+            <li class="auditLogDescription">Active</li>
+          </ul>
+        </div>
+
+        <div *ngIf="auditLogs?.length > 0; else no_data_templ" infiniteScroll (scrolled)="displayMoreItems()" [infiniteScrollDistance]="1">
+          <div *ngFor="let auditLog of auditLogs" >
+            <ul class="rowList">
+              <li class="auditLogTimestamp">{{auditLog.activityTimestamp}}</li>
+              <li class="auditLogDescription" placement="top" ngbTooltip="{{auditLog.description}}">{{auditLog.description}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <spinner [visible]="searching"></spinner>
+
+        <ng-template #no_data_templ>
+          <div class="noResult">
+            No audit logs found.
+          </div>
+        </ng-template>
+
+      </div>
+
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

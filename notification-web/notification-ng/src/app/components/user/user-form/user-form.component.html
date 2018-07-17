@@ -1,0 +1,111 @@
+<div id="main">
+
+  <div class="pageHeader">
+    <div class="formTitle">{{pageTitle}}</div>
+  </div>
+
+  <div class="mainContainer">
+
+    <div class="validation-message" *ngIf="errorHappend">
+      <div class="inner">
+        <h3>
+          <span>There was a problem saving the details.</span>
+          <span *ngIf="errors.length > 0"> Please check the following issue(s) below.</span>
+        </h3>
+        <ul *ngIf="errors.length > 0">
+          <li *ngFor="let message of errors">
+            {{message}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formWrapper">
+
+      <form #userForm="ngForm" (ngSubmit)="save()">
+
+        <div class="sectionTitle">User Details</div>
+
+        <div class="detailsContainer">
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>First Name</label>
+                <data *ngIf="!editMode">{{user.firstName}}</data>
+                <input *ngIf="editMode" type="text" id="firstName" name="firstName" [(ngModel)]="user.firstName" required class="input-medium">
+                <span *ngIf="editMode && formErrors.firstName" class="alert-error">{{ formErrors.firstName }}</span>
+              </div>
+            </div>
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Last Name</label>
+                <data *ngIf="!editMode">{{user.lastName}}</data>
+                <input *ngIf="editMode" type="text" id="lastName" name="lastName" [(ngModel)]="user.lastName" required class="input-medium">
+                <span *ngIf="editMode && formErrors.lastName" class="alert-error">{{ formErrors.lastName }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Email</label>
+                <data *ngIf="!editMode">{{user.email}}</data>
+                <input *ngIf="editMode" type="text" id="email" name="email" [(ngModel)]="user.email" required class="input-medium" email>
+                <span *ngIf="editMode && formErrors.email" class="alert-error">{{ formErrors.email }}</span>
+              </div>
+            </div>
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Phone number</label>
+                <data *ngIf="!editMode">{{user.phoneNumber}}</data>
+                <input *ngIf="editMode" type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" class="input-medium">
+                <span *ngIf="editMode && formErrors.phoneNumber" class="alert-error">{{ formErrors.phoneNumber }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="inputField formSection">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Status</label>
+                <data *ngIf="!editMode">{{user.status}}</data>
+                <select *ngIf="editMode" id="status" name="status" [(ngModel)]="user.status" required class="input-medium">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let t of statusList" [ngValue]="t.value">{{t.label}}</option>
+                </select>
+                <span *ngIf="editMode && formErrors.status" class="alert-error">{{ formErrors.status }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sectionSubheading">AD Login ID</div>
+
+          <div class="inputField formSection">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>User Name</label>
+                <data *ngIf="!editMode">{{user.userName}}</data>
+                <input *ngIf="editMode" type="text" id="userName" name="userName" [(ngModel)]="user.userName" class="input-medium" required>
+                <span *ngIf="editMode && formErrors.userName" class="alert-error">{{ formErrors.userName }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="addFooter">
+          <div class="submitButtons">
+            <span class="btn-link" (click)="back()">Back</span>
+            <input *ngIf="editMode" type="submit" class="btn-primary right" value="Save User" />
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+

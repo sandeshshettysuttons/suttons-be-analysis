@@ -1,0 +1,151 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>NOTIFICATION API RESTful Application</display-name>
+
+    <filter>
+        <!-- The CORS filter with parameters -->
+        <filter-name>CORS</filter-name>
+
+        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+
+        <!-- Note: All parameters are options, if ommitted CORS Filter
+           will fall back to the respective default values.
+        -->
+        <init-param>
+            <param-name>cors.allowGenericHttpRequests</param-name>
+            <param-value>true</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>cors.allowOrigin</param-name>
+            <param-value>*</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>cors.allowSubdomains</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.supportedMethods</param-name>
+            <param-value>GET, HEAD, POST, PUT, DELETE, OPTIONS</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>cors.supportedHeaders</param-name>
+            <param-value>Content-Type, X-Requested-With, Origin, Accept</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>cors.supportsCredentials</param-name>
+            <param-value>true</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>cors.maxAge</param-name>
+            <param-value>3600</param-value>
+        </init-param>
+
+    </filter>
+
+    <filter-mapping>
+        <!-- CORS Filter mapping -->
+        <filter-name>CORS</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- This filter wraps the JOSSO functionality using the standard Java security model -->
+    <filter>
+        <filter-name>Security Filter</filter-name>
+        <filter-class>au.com.suttons.notification.security.ActiveDirectorySecurityFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>PinLogin Filter</filter-name>
+        <filter-class>au.com.suttons.notification.security.pinLogin.PinSecurityFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>FileUpload Filter</filter-name>
+        <filter-class>au.com.suttons.notification.security.FileUploadFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>resourceFilter</filter-name>
+        <filter-class>au.com.suttons.notification.security.ResourceFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>AdminLogin Filter</filter-name>
+        <filter-class>au.com.suttons.notification.security.noLogin.AdminSecurityFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>resourceFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>FileUpload Filter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>Security Filter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>PinLogin Filter</filter-name>
+        <url-pattern>/password-api/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AdminLogin Filter</filter-name>
+        <url-pattern>/admin-api/*</url-pattern>
+    </filter-mapping>
+
+	<servlet>
+		<servlet-name>Logout Servlet</servlet-name>
+		<servlet-class>au.com.suttons.notification.LogoutServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout Servlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+    <servlet>
+        <servlet-name>VersionServlet</servlet-name>
+        <servlet-class>au.com.suttons.notification.VersionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VersionServlet</servlet-name>
+        <url-pattern>/version</url-pattern>
+    </servlet-mapping>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>API Resources</web-resource-name>
+            <url-pattern>/api/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>*</role-name>
+        </auth-constraint>
+    </security-constraint>  
+
+	<login-config>
+	    <auth-method>FORM</auth-method>
+	    <realm-name>ActiveDirectoryRealm</realm-name>
+	    <form-login-config>
+	        <form-login-page>/login.html</form-login-page>
+	        <form-error-page>/error.html</form-error-page>
+	    </form-login-config>
+	</login-config>
+
+    <security-role>
+        <role-name>*</role-name>
+    </security-role>
+</web-app>

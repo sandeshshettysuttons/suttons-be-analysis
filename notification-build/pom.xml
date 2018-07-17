@@ -11,6 +11,8 @@
     <name>notification</name>
 
     <modules>
+        <module>../notification-api</module>
+        <module>../notification-web</module>
 		<module>../notification-scheduler</module>
     </modules>
 

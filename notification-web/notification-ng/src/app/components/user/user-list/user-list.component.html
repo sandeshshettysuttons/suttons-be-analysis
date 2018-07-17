@@ -1,0 +1,82 @@
+<div id="main">
+
+  <div class="main-inner">
+
+    <div class="header">
+      <h2>User List</h2>
+      <a *ngIf="canAddUser()" class="btn-primary" routerLink="/users/new">Add User</a>
+      <span class="btn-primary" (click)="newSearch()">New Search</span>
+    </div>
+
+    <div class="search-results" *ngIf="!showSearchPanel">
+      Showing results for:
+      <span>
+          <strong>Code/Name</strong> {{ searchCriteria.typeahead ? searchCriteria.typeahead : 'Any' }}
+          <strong>Name</strong> {{ searchCriteria.firstName ? searchCriteria.firstName : 'Any' }}
+          <strong>Active:</strong> {{ searchCriteria.isActive ? 'Active Only' : 'All' }}
+        </span>
+    </div>
+
+    <div class="search-panel" *ngIf="showSearchPanel">
+      <div class="border">
+
+        <div class="clearfix">
+          <div class="left">
+            <label class="labelText">Name:</label>
+            <input type="text" [(ngModel)]="searchCriteria.typeahead" maxlength="30" placeholder="Name" >
+          </div>
+          <div class="right">
+            <label class="labelText">Active Only:</label>
+            <input type="checkbox" [(ngModel)]="searchCriteria.isActive" class="inputCheckbox"/>
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <div class="search">
+            <span class="btn-primary" (click)="search()">Search</span>
+            <span class="btn-link" (click)="cancelSearch()">Cancel</span>
+            <span class="btn-link" (click)="resetCriteria()">Reset</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tableControls">
+
+      <div>
+        <ul class="rowHeader">
+          <li class="colName"><a class="sortLink" (click)="reverse=!reverse;order('firstName', reverse)">Name</a></li>
+          <li class="colUsername"><a class="sortLink" (click)="reverse=!reverse;order('userName', reverse)">Username</a></li>
+          <li class="colEmail"><a class="sortLink" (click)="reverse=!reverse;order('email', reverse)">Email</a></li>
+          <li class="colActive">Active</li>
+        </ul>
+      </div>
+
+      <div *ngIf="users?.length > 0; else no_data_templ" infiniteScroll (scrolled)="displayMoreItems()" [infiniteScrollDistance]="1">
+        <div *ngFor="let user of users" >
+          <a class="rowLink" [routerLink]="['/users', user.id]">
+            <ul class="rowList">
+              <li class="colName">{{user.name}}</li>
+              <li class="colUsername">{{user.userName}}</li>
+              <li class="colEmail">{{user.email}}</li>
+              <li class="colActive">
+                <span *ngIf="user.status =='ACTIVE'">&#10004;</span>
+              </li>
+            </ul>
+          </a>
+        </div>
+      </div>
+
+      <spinner [visible]="searching"></spinner>
+
+      <ng-template #no_data_templ>
+        <div class="noResult">
+          No results found
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,852 @@
+/* You can add global styles to this file, and also import other style files */
+/*
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap/dist/css/bootstrap-theme.min.css";
+*/
+@import "./assets/css/normalize.css";
+
+@font-face {
+  font-family: 'IstokWeb-Bold';
+  src: url('./assets/fonts/istokweb-bold-webfont.eot') format('embedded-opentype'),
+  url('./assets/fonts/istokweb-bold-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./assets/fonts/istokweb-bold-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IstokWeb-Regular';
+  src: url('./assets/fonts/istokweb-regular-webfont.eot') format('embedded-opentype'),
+  url('./assets/fonts/istokweb-regular-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./assets/fonts/istokweb-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-color: #e4e4e4;
+  padding-bottom: 30px;
+  text-rendering: optimizeLegibility;
+  font-size: 13px;
+  color: #333333;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+select {
+  height: 24px;
+  border: solid 1px rgb(185, 185, 185);
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+
+.select-small {
+  width:80px;
+}
+.select-medium {
+  width:128px;
+}
+.select-large {
+  width:250px;
+}
+
+a {
+  text-decoration: none;
+  color: #1a84dd;
+  /*  font-size: 12px; */
+}
+
+.no-touch a:hover {
+  text-decoration: underline;
+  outline: 0;
+  cursor: pointer;
+}
+
+a, .no-touch a:hover, a:active, a:focus,
+button, .no-touch button:hover, button:active, button:focus{
+  outline: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  float: left;
+}
+
+.clearfix {
+  content: " ";
+  display: table;
+  clear: both;
+  width:100%;
+}
+
+.container {
+  max-width: 980px;
+  padding-right: 0px;
+}
+
+
+/* Override bootstrap styles
+_____________________________________________________________________________ */
+.navbar{
+  font-family: 'IstokWeb-Regular';
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #3c3c3c;
+}
+.navbar > .container .mainHeading, .navbar > .container .userName{
+  color: #fff;
+}
+.navbar > .container .mainHeading{
+  font-style: italic;
+}
+.nav-item  .show > .dropdown-menu{
+  background-color: #3c3c3c;
+}
+.nav-item  .show > .dropdown-menu .dropdown-item{
+  font-family: sans-serif;
+  color: #bbb;
+  padding: 6px 0 6px 20px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.nav-item  .show > .dropdown-menu .dropdown-item:hover,
+.nav-item  .show > .dropdown-menu .dropdown-item:focus {
+  color: #fff;
+  background-color: transparent;
+}
+.nav-item .dropdownConfig .dropdown-toggle::after,
+.nav-item .dropdownProfile .dropdown-toggle::after{
+  display: none;
+}
+
+.dropdownConfig a, .dropdownProfile a, .dropdownDepartment a{
+  cursor: pointer;
+}
+
+#dropdownConfig{
+  padding-right: 0px;
+}
+
+.navbarSubMenuItems{
+  margin-right: 0px !important;
+}
+
+.list-group-item{
+  padding: 4px 10px;
+}
+
+.mainContainer .list-group{
+  overflow: visible;
+}
+
+/* button styles
+_____________________________________________________________________________ */
+.btn-primary {
+  height: 26px;
+  padding: 0 6px;
+  line-height: 23px;
+  background-color: #1abc9c;
+  color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #1abc9c;
+  cursor: pointer;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
+  transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
+}
+.btn-primary.disabled, .btn-primary:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+.btn-primary.right {float:right;}
+.btn-primary:active {
+  background-color: #16a085;
+  border: 1px solid #16a085;
+
+}
+
+.btn-primary:hover {
+  background-color: #48c9b0;
+  border: 1px solid #48c9b0;
+}
+
+/* Message styles
+_____________________________________________________________________________ */
+.validation-message {
+  padding: 8px 24px;
+  margin: 28px 0 9px 0;
+  border: #fdb0b0 2px solid;
+  border-radius: 4px;
+  background-color: #ffd7d7;
+  color: #980000;
+}
+.validation-message .inner {
+  display: inline-block;
+}
+.validation-message h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+.validation-message ul {
+  float: left;
+  padding-left: 16px;
+  margin-top: 9px;
+}
+
+.validation-message li {
+  padding-bottom: 2px;
+  list-style: disc outside;
+  width: 100%;
+}
+
+.validation-message li:last-child {
+  padding-bottom: 0;
+}
+
+.result-message {
+  padding: 8px 24px;
+  margin: 28px 0 9px 0;
+  border: #4f8a10 2px solid;
+  border-radius: 4px;
+  background-color: #dff2bf;
+  color: #4f8a10;
+}
+.result-message .inner {
+  display: inline-block;
+}
+
+.alert-error {
+  color: #a94442;
+}
+
+/* Notification global styles
+_____________________________________________________________________________ */
+
+#main {
+  width: 978px;
+  min-height: 450px;
+  margin: 0 auto;
+  margin-top: 14px;
+  background-color: #fff;
+  border: 1px solid #b5b5b5;
+}
+
+.mainHeader {
+  height: 80px;
+  padding-top: 20px;
+  padding-left: 32px;
+  padding-right: 32px;
+  border: 1px solid #fff;
+  font-family: "IstokWeb-Bold";
+  text-align: center;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+.mainDetail {
+  margin-top: 50px;
+  text-align: center;
+}
+
+/* Header styles of main container
+_____________________________________________________________________________ */
+
+.mainHeader .pageTitleWrapper {
+  height:40px;
+}
+
+.mainHeader .pageTitle {
+  float: left;
+  font-size: 28px;
+  color: #1a191d;
+}
+
+.main-inner {
+  padding: 0 28px 28px;
+}
+
+#main .header {
+  padding: 20px 0 26px 0;
+  color: #141314;
+}
+#main .header h2{ font:30px "IstokWeb-Bold", sans-serif;margin: 0; margin-top:5px; display: inline-block;}
+
+
+#main .header .btn-primary{
+  float: right;
+  padding: 0 14px;
+  margin-top: 12px;
+  margin-left: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#main .header .btn-primary {
+  margin-left: 10px;
+}
+
+.sectionSubheading .btn-primary{
+  display: inline-block;
+}
+
+/* Detail page styles
+_____________________________________________________________________________ */
+.pageHeader{
+  padding: 10px 50px;
+  height:53px;
+  background-color: #cbe7fe;
+  border-bottom: 	1px solid #b5b5b5;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+.pageHeader .formTitle{
+  font-size: 24px;
+  font-family: "IstokWeb-Bold";
+  height:50px;
+  line-height: 36px;
+}
+.formWrapper {
+  position: relative;
+}
+
+.mainContainer {
+  padding:0 50px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.mainContainer input[type=text],
+.mainContainer input[type=number],
+.mainContainer input[type=password]{
+  height: 24px;
+  padding-left:3px;
+  padding-right:3px;
+  border: solid 1px rgb(185, 185, 185);
+  background: #ffffff;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+
+
+.mainContainer .inputContainer .ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+.mainContainer .inputContainer .ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.formSection, .endSection {
+  border-bottom: solid 1px rgb(188,188,188);
+  padding-bottom: 16px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+.sectionSubheading {
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.selectInline {
+  margin-right:12px;
+}
+.disableAccount {
+  margin-top: 26px;
+  padding-left:13px;
+  border: solid 1px #9f9f9f;
+  height: 35px;
+  background: #dadada;
+  line-height: 37px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+.disableAccount input {
+  margin-right:3px;
+}
+.disableAccount label {
+  margin-bottom: 0px;
+  margin-right: 16px;
+}
+.detailsContainer{
+  margin-top:10px;
+  padding-left: 10px;
+}
+#addFooter{
+  display: flow-root;
+}
+
+.submitButtons {
+  margin-top:16px;
+  float:right;
+  margin-bottom: 2px;
+  display: inline-table;
+}
+
+.btn-link, .line-btn-link {
+  margin-top: 4px;
+  margin-right: 8px;
+  float: left;
+  cursor: pointer;
+}
+.btn-link:HOVER, .line-btn-link:HOVER {
+  color: #2a6496;
+  text-decoration: underline;
+}
+.line-btn-link {
+  margin-top: 0px;
+  color: #007bff;
+}
+/*-----------------------
+	Input field area
+	--------------       */
+.inputField{
+  display: inline-block;
+  width: 864px;
+
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+.inputColumn{
+  display: inline-block;
+  width:400px;
+  height: 33px;
+
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+/*-------------------------------------------------------
+Fixes the issue with iPad where extra padding is added
+---------------------------------------------------------*/
+.inputColumn input{
+  padding-top:0;
+  padding-bottom:0;
+}
+
+.inputColumn .inputContainer{
+  height: 25px;
+}
+.inputColumn .inputContainer label{
+  display: inline-block;
+  font-weight: normal;
+  margin-bottom: 0px;
+}
+.inputColumn .inputContainer:nth-of-type(1){
+  margin-bottom: 7px;
+}
+.inputColumn .inputContainer:last-of-type{
+  margin-top: 7px;
+}
+
+.inputColumn button.remove, .inputColumn span.remove{
+  padding: 0px 5px;
+  float: right;
+}
+/*---------------------------
+	First column of inputs
+	------------------       */
+.inputField .inputColumn{
+  padding-left: 17px;
+}
+.inputField .inputColumn label{
+  width: 120px;
+  padding-right: 1px;
+}
+.inputField .inputColumn label.medium{
+  width: 200px;
+}
+
+.listContent .listItems {
+  overflow-y: auto;
+  max-height: 175px;
+}
+.listContent .listItems .contentRow:nth-child(odd) {
+  background:#F2F2F2;
+}
+.listContent .listItems .contentRow {
+  padding: 6px 17px 6px 12px;
+}
+.listContent .listItems .contentRow .itemRight {
+  float:right;
+}
+.listContent .listItems .contentRow .itemRight a {
+  margin-left: 4px;
+}
+.listContent .listItems .contentRow .itemRight img {
+  height: 11px;
+  width: 10px;
+}
+
+.dropdown-menu {
+  width: 234px;
+}
+.dropdown-menu li a{
+  width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/*----------------------
+  Search Results styles
+------------------------ */
+.search-results {
+  padding: 9px 1px 8px 1px;
+  margin: 9px 0 28px 0;
+  border-top: 1px solid #d2d2d2;
+  border-bottom: 1px solid #d2d2d2;
+  line-height: 18px;
+  font-size: 13px;
+}
+.search-results span {
+  font-size: 13px;
+}
+.search-results strong {
+  font-weight: bold;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+/*-------------
+ Table styles
+--------------- */
+.tableControls {
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 25px;
+  min-height: 20px;
+  box-sizing: content-box;
+}
+
+.tableHeader {
+  height: 28px;
+  border-bottom: 1px solid #d0d0d0;
+  color: #1a191a;
+  line-height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: bold;
+  display: block;
+}
+.tableHeader .releaseCancel { font-weight: normal; color:#706f70;; }
+.tableHeader .pipe { display:inline-block; height:9px; width:1px; margin:0 3px 0 3px; line-height: 0; background-color: #636363; border-right:1px solid #b7b7b7; }
+.tableHeader .releaseLoading { width: 20px; height: 28px; }
+
+.tableHeader .columnSelect,.tableHeader .actionSelect{
+  display: inline-block;
+}
+.tableHeader .actionSelect{
+  float: right;
+}
+
+.rowHeader {
+  height: 25px;
+  border-bottom: 1px solid #d0d0d0;
+  border-top: 1px solid #d0d0d0;
+  background-color: #f3f3f6;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 24px;
+  color: #545454;
+}
+
+.rowList {
+  height: 28px;
+  width: 100%;
+  font-size: 12px;
+  line-height: 28px;
+  border-bottom: 1px solid #d0d0d0;
+}
+.rowLink {
+  color: #333;
+}
+.rowHeader > li, .rowList > li, .rowLink > li{
+  margin-right: 8px;
+  padding-left: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-height: 1px;
+}
+
+.rowList > a{
+  color: #333333;
+}
+.rowList > a:hover {
+  color: #1a84dd;
+}
+.noResult{
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.rowList .dropdownSelection .dropdown-toggle::after{
+  display: none;
+}
+
+.rowList .dropdownSelection{
+  overflow: visible;
+}
+
+.rowList  .show > .dropdown-menu .dropdown-item{
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.rowList  .show > .dropdown-menu .dropdown-item:hover,
+.rowList  .show > .dropdown-menu .dropdown-item:focus {
+  background-color: #f3f3f6;
+}
+
+.rowList .dropdownSelection .dropdown-item{
+  padding: 0px 12px;
+}
+
+/*-----------------
+  AuditLog styles
+-------------------*/
+.auditLogTimestamp {
+  width: 145px;
+}
+.auditLogDescription {
+  width: 665px;
+}
+audit-logs{
+  margin-top:10px;
+  padding-left: 10px;
+}
+audit-logs .card-header{
+  border-bottom: none;
+}
+audit-logs .tooltip-inner{
+  max-width: 650px;
+}
+/*--------------------
+ Search Panel styles
+---------------------- */
+.search-results {padding: 9px 1px 8px 1px;margin: 9px 0 28px 0; border-top: 1px solid #D2D2D2;border-bottom: 1px solid #D2D2D2; line-height: 18px; font-size: 14px; }
+.search-results strong{font-weight: bold; margin-left: 15px; margin-right: 5px;}
+.search-results span {font-size: 13px;}
+
+.search-panel select { height: 22px; }
+.search-panel .inputCheckbox {min-height: 2em;}
+.search-panel { font-size:1.083em;}
+.search-panel .time-frame {margin-top: 23px;}
+.search-panel .border {border: 1px solid #E0E0E0;margin-bottom: 27px;background: #F3F3F3; background-color: #f7f7f7; padding-top: 10px;}
+.search-panel ul { list-style: none;margin: 0 auto;padding: 0;min-height: 1px;}
+.search-panel ul li { min-width: 1px; float: none;}
+.search-panel ul li.search { height: 28px; }
+.search-panel .left, .search-panel .right { float: left;}
+.search-panel .right {width: 430px; }
+.search-panel .left { width: 460px; line-height: 24px;}
+.search-panel .left.select { }
+.search-panel .right { height: auto }
+.search-panel .right .search-ro {width: 290px;}
+.search-panel .full { width: 100%; line-height: 1.083em;}
+.search-panel label { padding-right: 10px; width: 140px; display: inline-block}
+.search-panel .labelText { text-align: right;font-weight: bold;}
+
+.search-panel .statusList { display: inline-block; }
+.search-panel .statusList span{ padding-right: 18px; }
+.search-panel .statusList span .inputCheckbox { margin-right: 5px; }
+
+.search-panel .search { width: 100%; padding-bottom: 40px; padding-right: 20px;}
+.search-panel .search span {cursor: pointer; float: right;}
+
+.search-panel .input-small{width: 65px;}
+.search-panel .input-medium{width: 100px;}
+.search-panel .inputCaption{font-weight: bold;}
+
+.search-panel .right.wrapper {padding-left: 193px; width:auto;}
+.search-panel button span.right {width: 15px; }
+
+.search-panel input {
+  height: 24px;
+  padding: 2px 4px;
+  border: solid 1px rgb(185, 185, 185);
+  background: #ffffff;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+
+.search-panel input[type=file]{
+  border: none;
+  background:#f7f7f7;
+  height: 26px;
+  width:80%;
+}
+
+.spinnerContent{
+  text-align: center;
+  margin-top: 10px;
+}
+
+.sortLink:not([href]):not([tabindex]){
+  color: #1a84dd;
+  cursor: pointer;
+}
+.sortLink:not([href]):not([tabindex]):hover{
+  color: #1a84dd;
+  cursor: pointer;
+}
+
+/*--------------
+  common icons
+----------------*/
+
+.tick_icon {
+  width: 16px;
+  height: 15px;
+  background-image: url(./assets/images/tick-icon.png);
+  background-repeat: no-repeat;
+}
+
+.cross_icon {
+  width: 16px;
+  height: 16px;
+  background-image: url(./assets/images/cross-icon.png);
+  background-repeat: no-repeat;
+}
+
+.pdf_icon, .xls_icon  {
+  width: 25px;
+  height: 25px;
+  background-size: 25px 25px;
+  margin-right: 8px;
+}
+
+.fileicon20  {
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+  margin-right: 8px;
+}
+
+.pdf_icon {
+  background-image: url(./assets/images/pdf-icon.png);
+  background-repeat: no-repeat;
+}
+
+.xls_icon {
+  background-image: url(./assets/images/xls-icon.png);
+  background-repeat: no-repeat;
+}
+.back-to-top {
+  position: fixed;
+  bottom: 2em;
+  right: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #000;
+  background-color: rgba(235,235,235,0.80);
+  font-size: 13px;
+  padding: 1em;
+  display: none;
+}
+.hidePanel .card{
+  background-color: #f7f7f9 !important;
+  border: none !important;
+
+}
+
+/* Override multiselect-dropdown styles
+_____________________________________________________________________________ */
+.multiSelectDropdown{
+  display: inline-block;
+}
+.multiSelectDropdown .dropdown-list,
+.multiSelectDropdown .selected-list .c-btn{
+  width: 170px !important;
+}
+.columnSelect .multiSelectDropdown .dropdown-list,
+.columnSelect .multiSelectDropdown .selected-list .c-btn{
+  width: 150px !important;
+  height: 22px !important;
+  line-height: 18px !important;
+}
+.multiSelectDropdown .selected-list .c-list .c-token{
+  background: #f3f3f6!important;
+  color: #333333 !important;
+  font-weight: normal;
+  margin: 2px !important;
+}
+.multiSelectDropdown .select-all{
+  padding: 4px 8px 1px !important;
+}
+
+.multiSelectDropdown .selected-list .c-btn{
+  padding: 0px 10px !important;
+}
+.multiSelectDropdown .dropdown-list ul li{
+  padding: 0px 8px 1px !important;
+}
+
+.multiSelectDropdown .dropdown-list ul li:first-child{
+  padding-top: 2px !important;
+}
+.multiSelectDropdown .list-grp h4{
+  margin: 0px !important;
+}

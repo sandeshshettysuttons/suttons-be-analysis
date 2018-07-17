@@ -1,0 +1,16 @@
+.colName{
+  width: 180px;
+}
+.colUsername{
+  width: 180px;
+}
+.colLoginId{
+  width: 150px;
+}
+.colEmail{
+  width: 210px;
+}
+.colActive{
+  width: 72px;
+  text-align: center;
+}

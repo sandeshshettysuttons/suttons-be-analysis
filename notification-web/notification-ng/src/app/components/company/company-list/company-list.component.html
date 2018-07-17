@@ -1,0 +1,80 @@
+<div id="main">
+
+  <div class="main-inner">
+
+    <div class="header">
+      <h2>Company 3333 List</h2>
+      <a *ngIf="canAddCompany()" class="btn-primary" routerLink="/company/new">Add Company</a>
+      <span class="btn-primary" (click)="newSearch()">New Search</span>
+    </div>
+
+    <div class="search-results" *ngIf="!showSearchPanel">
+      Showing results for:
+      <span>
+          <strong>Name</strong> {{ searchCriteria.name ? searchCriteria.name : 'Any' }}
+          <strong>Status</strong> {{ searchCriteria.status ? searchCriteria.status : 'All' }}
+        </span>
+    </div>
+
+    <div class="search-panel" *ngIf="showSearchPanel">
+      <div class="border">
+
+        <div class="clearfix">
+          <div class="left">
+            <label class="labelText">Name:</label>
+            <input type="text" [(ngModel)]="searchCriteria.name" placeholder="Name" class="input-medium">
+          </div>
+          <div class="right">
+            <label class="labelText">Status:</label>
+            <select [(ngModel)]="searchCriteria.status" class="input-medium">
+              <option *ngFor="let t of statusList" [value]="t.value">{{t.label}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <div class="search">
+            <span class="btn-primary" (click)="search()">Search</span>
+            <span class="btn-link" (click)="cancelSearch()">Cancel</span>
+            <span class="btn-link" (click)="resetCriteria()">Reset</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tableControls">
+
+      <div>
+        <ul class="rowHeader">
+          <li class="colName"><a class="sortLink" (click)="reverse=!reverse;order('name', reverse)">Name</a></li>
+          <li class="colActive">Active</li>
+        </ul>
+      </div>
+
+      <div *ngIf="companies?.length > 0; else no_data_templ" infiniteScroll (scrolled)="displayMoreItems()" [infiniteScrollDistance]="1">
+        <div *ngFor="let company of companies" >
+          <a class="rowLink" [routerLink]="['/company', company.id]">
+            <ul class="rowList">
+              <li class="colName">{{company.name}}</li>
+              <li class="colActive">
+                <span *ngIf="company.status =='ACTIVE'">&#10004;</span>
+              </li>
+            </ul>
+          </a>
+        </div>
+      </div>
+
+      <spinner [visible]="searching"></spinner>
+
+      <ng-template #no_data_templ>
+        <div class="noResult">
+          No results found
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</div>

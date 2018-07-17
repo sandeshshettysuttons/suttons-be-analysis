@@ -1,0 +1,104 @@
+<div id="main">
+
+  <div class="pageHeader">
+    <div class="formTitle">{{pageTitle}}</div>
+  </div>
+
+  <div class="mainContainer">
+
+    <div class="validation-message" *ngIf="errorHappend">
+      <div class="inner">
+        <h3>
+          <span>There was a problem saving the details.</span>
+          <span *ngIf="errors.length > 0"> Please check the following issue(s) below.</span>
+        </h3>
+        <ul *ngIf="errors.length > 0">
+          <li *ngFor="let message of errors">
+            {{message}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formWrapper">
+
+      <form #mailRecipientForm="ngForm" (ngSubmit)="save()">
+
+        <div class="sectionTitle">Mail Recipient Details</div>
+
+        <div class="detailsContainer">
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Name</label>
+                <data *ngIf="!editMode">{{mailRecipient.name}}</data>
+                <input *ngIf="editMode" type="text" id="name" name="name" [(ngModel)]="mailRecipient.name" class="input-medium" required >
+                <span *ngIf="editMode && formErrors.name" class="alert-error">{{ formErrors.name }}</span>
+              </div>
+            </div>
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Email</label>
+                <data *ngIf="!editMode">{{mailRecipient.email}}</data>
+                <input *ngIf="editMode" type="text" id="email" name="email" [(ngModel)]="mailRecipient.email" class="input-medium" required email>
+                <span *ngIf="editMode && formErrors.email" class="alert-error">{{ formErrors.email }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Type</label>
+                <data *ngIf="!editMode">{{mailRecipient.type}}</data>
+                <select *ngIf="editMode" id="type" name="type" [(ngModel)]="mailRecipient.type" class="input-medium" required>
+                  <option value="">Select Type</option>
+                  <option *ngFor="let t of typeList" [ngValue]="t.value">{{t.label}}</option>
+                </select>
+                <span *ngIf="editMode && formErrors.type" class="alert-error">{{ formErrors.type }}</span>
+              </div>
+            </div>
+            <div class="inputColumn" *ngIf="mailRecipient.type != 'GLOBAL'">
+              <div class="inputContainer">
+                <label>Company</label>
+                <data *ngIf="!editMode">{{mailRecipient.company ? mailRecipient.company.name : ''}}</data>
+                <select *ngIf="editMode" id="company" name="company" [(ngModel)]="mailRecipient.company.id" class="input-medium" required>
+                  <option value="">Select Company</option>
+                  <option *ngFor="let t of companyList" [ngValue]="t.id">{{t.name}}</option>
+                </select>
+                <span *ngIf="editMode && formErrors.company" class="alert-error">{{ formErrors.company }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Status</label>
+                <data *ngIf="!editMode">{{mailRecipient.status}}</data>
+                <select *ngIf="editMode" id="status" name="status" [(ngModel)]="mailRecipient.status" required class="input-medium" required>
+                  <option value="">Select Status</option>
+                  <option *ngFor="let t of statusList" [ngValue]="t.value">{{t.label}}</option>
+                </select>
+                <span *ngIf="editMode && formErrors.status" class="alert-error">{{ formErrors.status }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="addFooter">
+          <div class="submitButtons">
+            <span class="btn-link" (click)="back()">Back</span>
+            <input *ngIf="editMode" type="submit" class="btn-primary right" value="Save Company" />
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+

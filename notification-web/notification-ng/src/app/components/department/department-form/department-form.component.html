@@ -1,0 +1,73 @@
+<div id="main">
+
+  <div class="pageHeader">
+    <div class="formTitle">{{pageTitle}}</div>
+  </div>
+
+  <div class="mainContainer">
+
+    <div class="validation-message" *ngIf="errorHappend">
+      <div class="inner">
+        <h3>
+          <span>There was a problem saving the details.</span>
+          <span *ngIf="errors.length > 0"> Please check the following issue(s) below.</span>
+        </h3>
+        <ul *ngIf="errors.length > 0">
+          <li *ngFor="let message of errors">
+            {{message}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formWrapper">
+
+      <form #departmentForm="ngForm" (ngSubmit)="save()">
+
+        <div class="sectionTitle">Company Details</div>
+
+        <div class="detailsContainer">
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Code</label>
+                <data *ngIf="!editMode">{{department.code}}</data>
+                <input *ngIf="editMode" type="text" id="code" name="code" [(ngModel)]="department.code" required maxlength="20" >
+                <span *ngIf="editMode && formErrors.code" class="alert-error">{{ formErrors.code }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="inputField">
+            <div class="inputColumn">
+              <div class="inputContainer">
+                <label>Name</label>
+                <data *ngIf="!editMode">{{department.name}}</data>
+                <input *ngIf="editMode" type="text" id="name" name="name" [(ngModel)]="department.name" required>
+                <span *ngIf="editMode && formErrors.name" class="alert-error">{{ formErrors.name }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="addFooter">
+          <div class="disableAccount">
+            <label *ngIf="!editMode" >Is Active</label>
+            <label *ngIf="!editMode" [ngClass]="{'tick_icon' : department.isActive, 'cross_icon' : !department.isActive}"></label>
+            <label *ngIf="editMode"><input type="checkbox" name="isActive" [(ngModel)]="department.isActive" class="inputCheckbox"/> Enable this company</label>
+          </div>
+          <div class="submitButtons">
+            <span class="btn-link" (click)="back()">Back</span>
+            <input *ngIf="editMode" type="submit" class="btn-primary right" value="Save Company" />
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+

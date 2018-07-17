@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-md navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#" routerLink="">Notification System</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarMainItems" aria-controls="navbarMainItems" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarMainItems">
+      <ul class="navbar-nav mr-auto" >
+        <div *ngFor="let menuItem of mainMenuItems">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="{{menuItem.routerLink}}">{{menuItem.title}}</a>
+          </li>
+        </div>
+      </ul>
+
+      <ul class="navbar-nav mr-sm-2 navbarSubMenuItems">
+        <li class="nav-item dropdown">
+          <div *ngIf="departments.length == 1" class="nav-link">{{currentDepartment.name}}</div>
+          <div *ngIf="departments.length > 1" ngbDropdown class="nav-item dropdown dropdownDepartment" placement="bottom-right">
+            <a class="nav-link dropdown-toggle displayName" id="dropdownDepartment" ngbDropdownToggle>{{currentDepartment.name}}</a>
+            <div ngbDropdownMenu aria-labelledby="dropdownDepartment">
+              <ng-container *ngFor="let department of departments">
+                <a *ngIf="currentDepartment.code != department.code" class="dropdown-item" (click)="selectDepartment(department)">{{department.name}}</a>
+              </ng-container>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown cls1">
+          <div ngbDropdown class="dropdownProfile" placement="bottom-right">
+            <a class="nav-link dropdown-toggle displayName" id="dropdownProfile" ngbDropdownToggle><i class="fa fa-user fa-fw" aria-hidden="true"></i></a>
+            <div ngbDropdownMenu aria-labelledby="dropdownProfile">
+              <a class="dropdown-item" routerLink="myprofile">{{userName}}</a>
+              <span role="separator" class="divider"></span>
+              <span role="separator" class="divider"></span>
+              <a class="dropdown-item" href="/notification/logout"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Logout</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown cls1" *ngIf="this.permission.canViewSetting">
+          <div ngbDropdown class="dropdownConfig" placement = "bottom-right">
+            <a class="nav-link dropdown-toggle cls3" id="dropdownConfig" ngbDropdownToggle><i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+              <a *ngIf="this.permission.canViewUser" class="dropdown-item" routerLink="users">User</a>
+              <span role="separator" class="divider"></span>
+              <span class="dropdown-header">Configuration</span>
+              <!--<a *ngIf="this.permission.canViewDepartment" class="dropdown-item" routerLink="department">Department</a>-->
+              <a *ngIf="this.permission.canViewCompany" class="dropdown-item" routerLink="company">Company</a>
+              <a *ngIf="this.permission.canViewMailRecipient" class="dropdown-item" routerLink="mailRecipient">Mail Recipient</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

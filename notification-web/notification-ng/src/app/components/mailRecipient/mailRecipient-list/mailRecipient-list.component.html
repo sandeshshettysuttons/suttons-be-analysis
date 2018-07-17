@@ -1,0 +1,100 @@
+<div id="main">
+
+  <div class="main-inner">
+
+    <div class="header">
+      <h2>Mail Recipient List</h2>
+      <a *ngIf="canAddMailRecipient()" class="btn-primary" routerLink="/mailRecipient/new">Add Mail Recipient</a>
+      <span class="btn-primary" (click)="newSearch()">New Search</span>
+    </div>
+
+    <div class="search-results" *ngIf="!showSearchPanel">
+      Showing results for:
+      <span>
+          <strong>Name</strong> {{ searchCriteria.name ? searchCriteria.name : 'Any' }}
+          <strong>Company</strong> {{ searchCriteria.company ? (searchCriteria.company.name ? searchCriteria.company.name : searchCriteria.company) : 'All' }}
+          <strong>Status</strong> {{ searchCriteria.status ? searchCriteria.status : 'All' }}
+        </span>
+    </div>
+
+    <div class="search-panel" *ngIf="showSearchPanel">
+      <div class="border">
+
+        <div class="clearfix">
+          <div class="left">
+            <label class="labelText">Name:</label>
+            <input type="text" [(ngModel)]="searchCriteria.name" placeholder="Name" class="input-medium">
+          </div>
+          <div class="right">
+            <label class="labelText">Company:</label>
+            <select [(ngModel)]="searchCriteria.company" class="input-medium">
+              <option selected value="">All</option>
+              <option value="Global">Global</option>
+              <optgroup label="Company">
+                <option *ngFor="let company of companyList" [ngValue]="company">{{company.name}}</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <div class="left">
+            <label class="labelText">Status:</label>
+            <select [(ngModel)]="searchCriteria.status" class="input-medium">
+              <option *ngFor="let t of statusList" [value]="t.value">{{t.label}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <div class="search">
+            <span class="btn-primary" (click)="search()">Search</span>
+            <span class="btn-link" (click)="cancelSearch()">Cancel</span>
+            <span class="btn-link" (click)="resetCriteria()">Reset</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tableControls">
+
+      <div>
+        <ul class="rowHeader">
+          <li class="colName"><a class="sortLink" (click)="reverse=!reverse;order('name', reverse)">Name</a></li>
+          <li class="colEmail"><a class="sortLink" (click)="reverse=!reverse;order('email', reverse)">Email</a></li>
+          <li class="colType"><a class="sortLink" (click)="reverse=!reverse;order('type', reverse)">Type</a></li>
+          <li class="colCompany"><a class="sortLink" (click)="reverse=!reverse;order('company.name', reverse)">Company</a></li>
+          <li class="colActive">Active</li>
+        </ul>
+      </div>
+
+      <div *ngIf="mailRecipients?.length > 0; else no_data_templ" infiniteScroll (scrolled)="displayMoreItems()" [infiniteScrollDistance]="1">
+        <div *ngFor="let mailRecipient of mailRecipients" >
+          <a class="rowLink" [routerLink]="['/mailRecipient', mailRecipient.id]">
+            <ul class="rowList">
+              <li class="colName">{{mailRecipient.name}}</li>
+              <li class="colEmail">{{mailRecipient.email}}</li>
+              <li class="colType">{{mailRecipient.type}}</li>
+              <li class="colCompany">{{mailRecipient.company ? mailRecipient.company.name : ''}}</li>
+              <li class="colActive">
+                <span *ngIf="mailRecipient.status =='ACTIVE'">&#10004;</span>
+              </li>
+            </ul>
+          </a>
+        </div>
+      </div>
+
+      <spinner [visible]="searching"></spinner>
+
+      <ng-template #no_data_templ>
+        <div class="noResult">
+          No results found
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</div>
