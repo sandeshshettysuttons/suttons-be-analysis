@@ -23,10 +23,6 @@ end-if
                 TERMINATION_NOTIFICATION_WEEKLY_CRON_EXPRESSION_KEY="0 0 6 * * Mon", \
 			])
 
-# Create jms-queue
-if (outcome == failed) of /subsystem=messaging/hornetq-server=default/jms-queue=MonthendInvoiceCreationQueue:read-resource
-     /subsystem=messaging/hornetq-server=default/jms-queue=MonthendInvoiceCreationQueue:add(entries=["java:/jms/queue/MonthendInvoiceCreationQueue"])
-end-if
 
 # Create drivers
 if (outcome == failed) of /subsystem=datasources/jdbc-driver=com.mysql.jdbc:read-resource
