@@ -20,6 +20,10 @@ export class CompanyService extends ApiService{
 
     if (searchCriteria) {
 
+      if (searchCriteria.code) {
+        _queryParam += (firstCriteria ? '': '+')+'code('+searchCriteria.code+')';
+        firstCriteria = false;
+      }
       if (searchCriteria.name) {
         _queryParam += (firstCriteria ? '': '+')+'name('+searchCriteria.name+')';
         firstCriteria = false;
@@ -32,12 +36,12 @@ export class CompanyService extends ApiService{
 
     _queryParam = firstCriteria ? null : _queryParam;
 
-    return this.get(this.resourceApiUri, 'company(name,status)', _queryParam, _orderBy, _reverse, null, true);
+    return this.get(this.resourceApiUri, 'company(*)', _queryParam, _orderBy, _reverse, null, true);
   }
 
   getById(id){
     let newUrl = this.resourceApiUri + '/' + id;
-    return this.get(newUrl, 'company(version,name,status)', null, null, null, null, true);
+    return this.get(newUrl, 'company(*)', null, null, null, null, true);
   }
 
 }

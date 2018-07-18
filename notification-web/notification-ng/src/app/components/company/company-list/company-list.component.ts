@@ -21,6 +21,7 @@ export class CompanyListComponent implements OnInit {
 
   searchCriteriaMaster = {
     name: '',
+    code: '',
     status: 'ACTIVE'
   };
 

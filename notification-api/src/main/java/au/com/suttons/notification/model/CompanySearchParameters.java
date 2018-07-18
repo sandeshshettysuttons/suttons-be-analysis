@@ -4,6 +4,7 @@ import au.com.suttons.notification.resource.bean.RequestBean;
 
 public class CompanySearchParameters extends BaseSearchParameters
 {
+    private String code;
     private String name;
     private String status;
 
@@ -11,10 +12,19 @@ public class CompanySearchParameters extends BaseSearchParameters
     {
         CompanySearchParameters param = new CompanySearchParameters();
 
+        param.setCode(requestBean.getQueryParam("code"));
         param.setName(requestBean.getQueryParam("name"));
         param.setStatus(requestBean.getQueryParam("status"));
 
         return param;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

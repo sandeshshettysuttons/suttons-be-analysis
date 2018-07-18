@@ -48,6 +48,12 @@ public class CompanyDao extends BaseDao<CompanyEntity>
                 {
                     Predicate predicate = criteriaBuilder.conjunction();
 
+                    if(params.getCode() != null) {
+                        predicate = criteriaBuilder.and(
+                                predicate, criteriaBuilder.like(
+                                        criteriaBuilder.lower(root.get("code")), "%"+params.getCode().toLowerCase()+"%")
+                        );
+                    }
                     if(params.getName() != null) {
                         predicate = criteriaBuilder.and(
                                 predicate, criteriaBuilder.like(
@@ -56,7 +62,7 @@ public class CompanyDao extends BaseDao<CompanyEntity>
                     }
                     if(params.getStatus() != null) {
                         predicate = criteriaBuilder.and(
-                                predicate, criteriaBuilder.equal(root.get("status"), params.getStatus())
+                                predicate, criteriaBuilder.equal(criteriaBuilder.lower(root.get("status")), params.getStatus().toLowerCase())
                         );
                     }
 

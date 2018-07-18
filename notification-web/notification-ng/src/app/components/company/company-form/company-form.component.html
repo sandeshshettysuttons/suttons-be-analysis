@@ -31,6 +31,13 @@
           <div class="inputField">
             <div class="inputColumn">
               <div class="inputContainer">
+                <label>Code</label>
+                <data *ngIf="!editMode">{{company.code}}</data>
+                <input *ngIf="editMode" type="text" id="code" name="code" [(ngModel)]="company.code" class="input-medium">
+              </div>
+            </div>
+            <div class="inputColumn">
+              <div class="inputContainer">
                 <label>Name</label>
                 <data *ngIf="!editMode">{{company.name}}</data>
                 <input *ngIf="editMode" type="text" id="name" name="name" [(ngModel)]="company.name" required class="input-long">

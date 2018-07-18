@@ -9,6 +9,7 @@ CREATE TABLE notification.company (
     LASTUPDATETS      DATETIME NOT NULL,
     LASTUPDATEDBY     BIGINT NOT NULL,
     VERSION           BIGINT DEFAULT 1 NOT NULL,
+    CODE              VARCHAR(50),
     NAME              VARCHAR(200) NOT NULL,
     STATUS            VARCHAR(20) NOT NULL,
     PRIMARY KEY (id)

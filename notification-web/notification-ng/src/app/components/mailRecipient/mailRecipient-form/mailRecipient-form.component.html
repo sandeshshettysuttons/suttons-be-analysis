@@ -41,7 +41,7 @@
               <div class="inputContainer">
                 <label>Email</label>
                 <data *ngIf="!editMode">{{mailRecipient.email}}</data>
-                <input *ngIf="editMode" type="text" id="email" name="email" [(ngModel)]="mailRecipient.email" class="input-medium" required email>
+                <input *ngIf="editMode" type="text" id="email" name="email" [(ngModel)]="mailRecipient.email" class="input-medium" required>
                 <span *ngIf="editMode && formErrors.email" class="alert-error">{{ formErrors.email }}</span>
               </div>
             </div>
@@ -62,10 +62,10 @@
             <div class="inputColumn" *ngIf="mailRecipient.type != 'GLOBAL'">
               <div class="inputContainer">
                 <label>Company</label>
-                <data *ngIf="!editMode">{{mailRecipient.company ? mailRecipient.company.name : ''}}</data>
+                <data *ngIf="!editMode">{{mailRecipient.company ? mailRecipient.company.code + ' - ' + mailRecipient.company.name : ''}}</data>
                 <select *ngIf="editMode" id="company" name="company" [(ngModel)]="mailRecipient.company.id" class="input-medium" required>
                   <option value="">Select Company</option>
-                  <option *ngFor="let t of companyList" [ngValue]="t.id">{{t.name}}</option>
+                  <option *ngFor="let t of companyList" [ngValue]="t.id">{{t.code?t.code+' - ':''}} {{t.name}}</option>
                 </select>
                 <span *ngIf="editMode && formErrors.company" class="alert-error">{{ formErrors.company }}</span>
               </div>

@@ -2,8 +2,9 @@ import { BaseModel } from "./base.model";
 
 export class Company extends BaseModel{
 
-  static updateColumns = 'name,status';
+  static updateColumns = 'code,name,status';
 
+  code: string;
   name: string;
   status: string;
 }

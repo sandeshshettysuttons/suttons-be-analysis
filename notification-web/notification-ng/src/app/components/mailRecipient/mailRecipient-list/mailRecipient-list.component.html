@@ -31,7 +31,7 @@
               <option selected value="">All</option>
               <option value="Global">Global</option>
               <optgroup label="Company">
-                <option *ngFor="let company of companyList" [ngValue]="company">{{company.name}}</option>
+                <option *ngFor="let company of companyList" [ngValue]="company">{{company.code?company.code+' - ':''}} {{company.name}}</option>
               </optgroup>
             </select>
           </div>

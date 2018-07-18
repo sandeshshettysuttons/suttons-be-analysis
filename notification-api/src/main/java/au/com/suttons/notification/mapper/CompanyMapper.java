@@ -29,6 +29,7 @@ public class CompanyMapper extends BaseMapper
         bean.setId(entity.getId());
         bean.setVersion(entity.getVersion());
 
+        bean.setCode(entity.getCode());
         bean.setName(entity.getName());
         bean.setStatus(entity.getStatus());
 
@@ -69,6 +70,9 @@ public class CompanyMapper extends BaseMapper
 
         entity.setVersion(bean.getVersion());
 
+        if(bean.isUpdatable("code")) {
+            entity.setCode(bean.getCode());
+        }
         if(bean.isUpdatable("name")) {
             entity.setName(bean.getName());
         }

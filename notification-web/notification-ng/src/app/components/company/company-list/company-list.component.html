@@ -3,7 +3,7 @@
   <div class="main-inner">
 
     <div class="header">
-      <h2>Company 3333 List</h2>
+      <h2>Company List</h2>
       <a *ngIf="canAddCompany()" class="btn-primary" routerLink="/company/new">Add Company</a>
       <span class="btn-primary" (click)="newSearch()">New Search</span>
     </div>
@@ -11,9 +11,10 @@
     <div class="search-results" *ngIf="!showSearchPanel">
       Showing results for:
       <span>
-          <strong>Name</strong> {{ searchCriteria.name ? searchCriteria.name : 'Any' }}
-          <strong>Status</strong> {{ searchCriteria.status ? searchCriteria.status : 'All' }}
-        </span>
+        <strong>Code</strong> {{ searchCriteria.code ? searchCriteria.code : 'Any' }}
+        <strong>Name</strong> {{ searchCriteria.name ? searchCriteria.name : 'Any' }}
+        <strong>Status</strong> {{ searchCriteria.status ? searchCriteria.status : 'All' }}
+      </span>
     </div>
 
     <div class="search-panel" *ngIf="showSearchPanel">
@@ -21,10 +22,16 @@
 
         <div class="clearfix">
           <div class="left">
+            <label class="labelText">Code:</label>
+            <input type="text" [(ngModel)]="searchCriteria.code" placeholder="Code" class="input-medium">
+          </div>
+          <div class="right">
             <label class="labelText">Name:</label>
             <input type="text" [(ngModel)]="searchCriteria.name" placeholder="Name" class="input-medium">
           </div>
-          <div class="right">
+        </div>
+        <div class="clearfix">
+          <div class="left">
             <label class="labelText">Status:</label>
             <select [(ngModel)]="searchCriteria.status" class="input-medium">
               <option *ngFor="let t of statusList" [value]="t.value">{{t.label}}</option>
@@ -47,6 +54,7 @@
 
       <div>
         <ul class="rowHeader">
+          <li class="colCode"><a class="sortLink" (click)="reverse=!reverse;order('code', reverse)">Code</a></li>
           <li class="colName"><a class="sortLink" (click)="reverse=!reverse;order('name', reverse)">Name</a></li>
           <li class="colActive">Active</li>
         </ul>
@@ -56,6 +64,7 @@
         <div *ngFor="let company of companies" >
           <a class="rowLink" [routerLink]="['/company', company.id]">
             <ul class="rowList">
+              <li class="colCode">{{company.code}}</li>
               <li class="colName">{{company.name}}</li>
               <li class="colActive">
                 <span *ngIf="company.status =='ACTIVE'">&#10004;</span>
