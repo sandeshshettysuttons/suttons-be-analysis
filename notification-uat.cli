@@ -29,9 +29,6 @@ if (outcome == failed) of /subsystem=messaging/hornetq-server=default/jms-queue=
 end-if
 
 # Create drivers
-if (outcome == failed) of /subsystem=datasources/jdbc-driver=as400:read-resource
-     /subsystem=datasources/jdbc-driver=as400:add(driver-module-name=com.ibm.as400,driver-name=as400,driver-class-name=com.ibm.as400.access.AS400JDBCDriver,driver-xa-datasource-class-name=com.ibm.as400.access.AS400JDBCXADataSource)
-end-if
 if (outcome == failed) of /subsystem=datasources/jdbc-driver=com.mysql.jdbc:read-resource
      /subsystem=datasources/jdbc-driver=com.mysql.jdbc:add(driver-module-name=com.mysql.jdbc,driver-name=com.mysql.jdbc,driver-class-name=com.mysql.jdbc.Driver)
 end-if
@@ -52,32 +49,3 @@ end-if
 /subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=password,value="password")
 /subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=valid-connection-checker-class-name,value="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker")
 /subsystem=datasources/data-source=NotificationDataSource:write-attribute(name=exception-sorter-class-name,value="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter")
-
-if (outcome == failed) of /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400:read-resource
-    /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400:add( \
-        driver-name="as400", \
-        jndi-name="java:/jdbc/DB2STARDataSource_AS400", \
-        user-name="starftp", \
-        password="transfer", \
-        use-ccm="false", \
-        xa-datasource-class="com.ibm.as400.access.AS400JDBCXADataSource", \
-        transaction-isolation="TRANSACTION_READ_COMMITTED", \
-        min-pool-size="5", \
-        initial-pool-size="5", \
-        flush-strategy="FailingConnectionOnly", \
-        max-pool-size="30", \
-        interleaving="false", \
-        wrap-xa-resource="true", \
-        same-rm-override="false", \
-        interliving="false", \
-        pad-xid="false", \
-        wrap-xa-datasource="true", \
-        validate-on-match="false", \
-        background-validation="false", \
-        prepared-statements-cache-size="10", \
-        share-prepared-statements="true" \
-    )
-    /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400/xa-datasource-properties=ServerName:add(value=homer)
-    /subsystem=datasources/xa-data-source=DB2STARDataSource_AS400/xa-datasource-properties=DateFormat:add(value=iso)
-
-end-if
