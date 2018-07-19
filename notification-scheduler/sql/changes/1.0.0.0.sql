@@ -113,7 +113,8 @@ CREATE TABLE notification.terminationnotificationconfig (
     version               BIGINT DEFAULT 1 NOT NULL,
     daystoterminationfrom BIGINT NOT NULL,
     daystoterminationto   BIGINT NOT NULL,
-    label                 VARCHAR(100) NOT NULL,
+    description           VARCHAR(100) NOT NULL,
+    sequence              BIGINT NOT NULL,
     type                  VARCHAR(20) NOT NULL,
     PRIMARY KEY (id)
 );
