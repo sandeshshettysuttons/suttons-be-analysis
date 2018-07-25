@@ -78,6 +78,7 @@ CREATE TABLE notification.employeefiledetail (
     lastupdatets        DATETIME NOT NULL,
     lastupdatedby       BIGINT NOT NULL,
     version             BIGINT DEFAULT 1 NOT NULL,
+    companycode         VARCHAR(50),
     description         VARCHAR(100),
     employeenumber      VARCHAR(20),
     firstname           VARCHAR(50),

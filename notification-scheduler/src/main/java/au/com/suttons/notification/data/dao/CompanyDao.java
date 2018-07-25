@@ -30,12 +30,27 @@ public class CompanyDao extends BaseDao<CompanyEntity>
     }
 
     public CompanyEntity findByName(String name) {
-        String sql = "SELECT c FROM CompanyEntity c WHERE c.name = :name AND c.status = :activeStatus";
+        String sql = "SELECT c FROM CompanyEntity c WHERE UPPER(c.name) = UPPER(:name) AND c.status = :activeStatus";
 
         try {
 
             return this.entityManager.createQuery(sql, CompanyEntity.class)
                     .setParameter("name", name)
+                    .setParameter("activeStatus", JobConstants.STATUS_ACTIVE)
+                    .getSingleResult();
+
+        } catch(NoResultException e) {
+            return null;
+        }
+    }
+
+    public CompanyEntity findByCode(String code) {
+        String sql = "SELECT c FROM CompanyEntity c WHERE c.code = :code AND c.status = :activeStatus";
+
+        try {
+
+            return this.entityManager.createQuery(sql, CompanyEntity.class)
+                    .setParameter("code", code)
                     .setParameter("activeStatus", JobConstants.STATUS_ACTIVE)
                     .getSingleResult();
 

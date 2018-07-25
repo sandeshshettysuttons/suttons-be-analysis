@@ -14,6 +14,8 @@ import au.com.suttons.notification.fileprocessor.EmployeeTerminationFileProcesso
 import au.com.suttons.notification.jobs.JobConstants;
 import au.com.suttons.notification.util.DateUtil;
 import au.com.suttons.notification.util.FileUtil;
+import au.com.suttons.notification.util.StringUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,10 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Stateless
@@ -42,41 +47,43 @@ public class EmployeeFileService
     @EJB
     private CompanyDao companyDao;
 
-    public void readEmployeeFiles() throws IOException {
+    public void readEmployeeFiles(Path file) throws IOException {
 
-        // Step 1 : Read all files from documents folder
-        List<Path> files = FileUtil.getFilesInDirectory(
-                FileUtil.getEmployeeFileLocation());
-
-        for (Path file : files) {
+        try {
 
             String fileName = file.getFileName().toString();
             String fileUrl = file.toString();
 
-            // Step 2 : Check if file name already exists in the Employee File table
-            EmployeeFileEntity employeeFile = employeeFileDao.findByName(fileName);
+            // Read file and insert details into Employee File table
+            EmployeeTerminationFileProcessor processor = new EmployeeTerminationFileProcessor();
+            List employeeFileDetails = processor.getList(fileUrl);
 
-            if (employeeFile == null) {
+            if(CollectionUtils.isNotEmpty(employeeFileDetails)) {
 
-                // Step 3 : In case file is new, read file and insert details into Employee File table
-                EmployeeTerminationFileProcessor processor = new EmployeeTerminationFileProcessor();
-                List employeeFileDetails = processor.getList(fileUrl);
+                EmployeeFileEntity employeeFile = new EmployeeFileEntity();
+                employeeFile.setFileUrl(fileUrl);
+                employeeFile.setFileName(fileName);
+                employeeFile.setStatus(JobConstants.STATUS_PROCESSED);
+                employeeFile.setLastUpdatedBy(JobConstants.USER_SYSTEM);
 
-                if(!employeeFileDetails.isEmpty()) {
+                employeeFile = employeeFileDao.saveAndFlush(employeeFile);
 
-                    employeeFile = new EmployeeFileEntity();
-                    employeeFile.setFileUrl(fileUrl);
-                    employeeFile.setFileName(fileName);
-                    employeeFile.setStatus(JobConstants.STATUS_PROCESSED);
-                    employeeFile.setLastUpdatedBy(JobConstants.USER_SYSTEM);
+                saveEmployeeFileDetails(employeeFileDetails, employeeFile);
 
-                    employeeFile = employeeFileDao.saveAndFlush(employeeFile);
+                // If reading is successful, move file to imported directory
+                moveFileToImportedDir(file);
 
-                    saveEmployeeFileDetails(employeeFileDetails, employeeFile);
-                }
-
+            } else {
+                // If not a standard employee file , move file to error directory
+                moveFileToErrorDir(file);
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Error reading employee file  : "+ e.getMessage());
+
+            // In case of exception, move file to error directory
+            moveFileToErrorDir(file);
         }
 
     }
@@ -90,6 +97,7 @@ public class EmployeeFileService
             entity.setEmployeeNumber(employeeDetail.getEmployeeNumber());
             entity.setFirstName(employeeDetail.getFirstName());
             entity.setLastName(employeeDetail.getLastName());
+            entity.setCompanyCode(employeeDetail.getCompanyCode());
             entity.setDescription(employeeDetail.getDescription());
             entity.setPosition(employeeDetail.getPosition());
             if (StringUtils.isNotBlank(employeeDetail.getTerminationDate())) {
@@ -126,17 +134,26 @@ public class EmployeeFileService
         employee.setLastUpdatedBy(employeeFileDetail.getLastUpdatedBy());
 
         employee.setCompany(
-                updateCompanies(employee));
+                updateCompanies(employee, employeeFileDetail.getCompanyCode()));
 
         this.employeeDao.saveAndFlush(employee);
     }
 
-    public CompanyEntity updateCompanies(EmployeeEntity employee) {
+    public CompanyEntity updateCompanies(EmployeeEntity employee, String companyCode) {
 
-        CompanyEntity company = companyDao.findByName(employee.getDescription());
+        CompanyEntity company;
+
+        if (StringUtils.isNumeric(companyCode)) {
+            companyCode = String.valueOf(Integer.parseInt(companyCode));
+            company = companyDao.findByCode(companyCode);
+
+        } else {
+            company = companyDao.findByName(employee.getDescription());
+        }
 
         if (company == null) {
             company = new CompanyEntity();
+            company.setCode(companyCode);
             company.setName(employee.getDescription());
             company.setStatus(JobConstants.STATUS_ACTIVE);
             company.setLastUpdatedBy(employee.getLastUpdatedBy());
@@ -145,6 +162,42 @@ public class EmployeeFileService
         }
 
         return company;
+    }
+
+    private void moveFileToImportedDir(Path file) {
+
+        Path importedDir = Paths.get(
+                FileUtil.getImportedEmployeeFilesLocation(), file.getFileName().toString());
+
+        Path temp = null;
+        try {
+            temp = Files.move(file, importedDir, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("Error moving file to imported directory : "+ e.getMessage());
+        }
+
+        if(temp == null) {
+            logger.error("Error moving file to imported directory.");
+        }
+    }
+
+    private void moveFileToErrorDir(Path file) {
+
+        Path importedDir = Paths.get(
+                FileUtil.getErrorEmployeeFilesLocation(), file.getFileName().toString());
+
+        Path temp = null;
+        try {
+            temp = Files.move(file, importedDir, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("Error moving file to error directory : "+ e.getMessage());
+        }
+
+        if(temp == null) {
+            logger.error("Error moving file to error directory.");
+        }
     }
 
 }

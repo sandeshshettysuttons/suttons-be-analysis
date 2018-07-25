@@ -3,6 +3,7 @@ package au.com.suttons.notification.jobs;
 import au.com.suttons.notification.config.AppConfig;
 import au.com.suttons.notification.jobs.util.CronUtil;
 import au.com.suttons.notification.service.EmployeeFileService;
+import au.com.suttons.notification.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,8 @@ import javax.ejb.EJB;
 import javax.ejb.ScheduleExpression;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import java.nio.file.Path;
+import java.util.List;
 
 @Singleton
 @Startup
@@ -35,7 +38,14 @@ public class EmployeeFileReadJob extends BaseJob
         {
             logger.info(String.format("%s job STARTED", JobConstants.KEY_EMPLOYEE_FILE_READ_JOB));
 
-            this.employeeFileService.readEmployeeFiles();
+            // Read all CSV files from documents folder
+            List<Path> files = FileUtil.getCSVFilesInDirectory(
+                    FileUtil.getEmployeeFileLocation());
+
+            for (Path file : files) {
+                // Process each file
+                this.employeeFileService.readEmployeeFiles(file);
+            }
 
             logger.info(String.format("%s job ENDED", JobConstants.KEY_EMPLOYEE_FILE_READ_JOB));
 

@@ -18,6 +18,9 @@ public class EmployeeFileDetailEntity extends BaseEntity {
 	@Column(name = "LASTNAME", length=50)
 	private String lastName;
 
+	@Column(name = "COMPANYCODE", length=50)
+	private String companyCode;
+
 	@Column(name = "DESCRIPTION", length=100)
 	private String description;
 
@@ -57,6 +60,14 @@ public class EmployeeFileDetailEntity extends BaseEntity {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
 	public String getDescription() {

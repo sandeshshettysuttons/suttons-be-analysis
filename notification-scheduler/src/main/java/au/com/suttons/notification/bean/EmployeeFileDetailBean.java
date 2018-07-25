@@ -8,6 +8,7 @@ public class EmployeeFileDetailBean
 	private String employeeNumber;
 	private String firstName;
 	private String lastName;
+	private String companyCode;
 	private String description;
 	private String position;
 	private String terminationDate;
@@ -35,6 +36,14 @@ public class EmployeeFileDetailBean
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
 	public String getDescription() {
