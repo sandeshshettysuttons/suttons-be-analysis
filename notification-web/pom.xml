@@ -213,7 +213,7 @@
                 <api.docs.url></api.docs.url>
                 <app.dir>src/main/webapp</app.dir>
 				<app.base-href>/notification/</app.base-href>
-                <app.env>prod</app.env>
+                <app.env>production</app.env>
                 <base.directory>${project.build.directory}/notification</base.directory>
             </properties>
         </profile>
