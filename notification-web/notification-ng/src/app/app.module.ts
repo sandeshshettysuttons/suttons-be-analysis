@@ -15,6 +15,7 @@ import { userRouting }        from "./components/user/user.routing";
 
 import { AccessDeniedComponent } from "./components/access-denied.component";
 import { AppComponent }       from './app.component';
+import { AuditlogComponent } from "./components/auditlog/auditlog.component";
 import { HomeComponent }      from './components/home/home.component';
 import { NavbarComponent }    from './navbar/navbar.component';
 import { FooterComponent }    from "./footer/footer.component";
@@ -36,6 +37,7 @@ import {companyRouting} from "./components/company/company.routing";
   declarations: [
     AccessDeniedComponent,
     AppComponent,
+    AuditlogComponent,
     HasPermissionDirective,
     HomeComponent,
     FooterComponent,
