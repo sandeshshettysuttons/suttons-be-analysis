@@ -20,8 +20,6 @@ public class TerminationNotificationWeeklyJob extends BaseJob
     @EJB
     private TerminationNotificationService terminationNotificationService;
 
-    private static final String NOTIFICATION_CONFIG_TYPE_WEEKLY = "WEEKLY";
-
     @Override
 	protected void setupScheduler() {
         if (AppConfig.terminationNotificationWeeklyJob != null)
@@ -37,7 +35,7 @@ public class TerminationNotificationWeeklyJob extends BaseJob
         {
             logger.info(String.format("%s job STARTED", JobConstants.KEY_TERMINATION_NOTIFICATION_WEEKLY_JOB));
 
-            this.terminationNotificationService.sendTerminationNotifications(NOTIFICATION_CONFIG_TYPE_WEEKLY);
+            this.terminationNotificationService.sendTerminationNotifications(JobConstants.NOTIFICATION_TYPE_WEEKLY);
 
             logger.info(String.format("%s job ENDED", JobConstants.KEY_TERMINATION_NOTIFICATION_WEEKLY_JOB));
 

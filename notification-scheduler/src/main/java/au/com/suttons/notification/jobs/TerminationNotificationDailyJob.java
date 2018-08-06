@@ -20,8 +20,6 @@ public class TerminationNotificationDailyJob extends BaseJob
     @EJB
     private TerminationNotificationService terminationNotificationService;
 
-    private static final String NOTIFICATION_CONFIG_TYPE_DAILY = "DAILY";
-
     @Override
 	protected void setupScheduler() {
         if (AppConfig.terminationNotificationDailyJob != null)
@@ -37,7 +35,7 @@ public class TerminationNotificationDailyJob extends BaseJob
         {
             logger.info(String.format("%s job STARTED", JobConstants.KEY_TERMINATION_NOTIFICATION_DAILY_JOB));
 
-            this.terminationNotificationService.sendTerminationNotifications(NOTIFICATION_CONFIG_TYPE_DAILY);
+            this.terminationNotificationService.sendTerminationNotifications(JobConstants.NOTIFICATION_TYPE_DAILY);
 
             logger.info(String.format("%s job ENDED", JobConstants.KEY_TERMINATION_NOTIFICATION_DAILY_JOB));
 

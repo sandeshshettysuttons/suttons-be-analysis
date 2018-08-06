@@ -144,3 +144,7 @@ ALTER TABLE notification.mailrecipient
     ADD CONSTRAINT fk_mailrecipient_company
     FOREIGN KEY (company_id) REFERENCES notification.company (id);
 
+
+-- Add Notification Sent Flag
+ALTER TABLE notification.employee
+    ADD COLUMN notificationsent CHAR(1) NULL DEFAULT '0' AFTER terminationdate;

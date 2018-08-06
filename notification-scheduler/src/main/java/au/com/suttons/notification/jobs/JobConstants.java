@@ -15,6 +15,9 @@ public class JobConstants
     public static final String MAIL_RECIPIENT_TYPE_GLOBAL = "GLOBAL";
     public static final String MAIL_RECIPIENT_TYPE_COMPANY = "COMPANY";
 
+    public static final String NOTIFICATION_TYPE_DAILY = "DAILY";
+    public static final String NOTIFICATION_TYPE_WEEKLY = "WEEKLY";
+
     public static final Long USER_SYSTEM = new Long(1);
 
 }

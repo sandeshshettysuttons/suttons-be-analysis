@@ -28,6 +28,7 @@ public class DateUtil
     public static final String RPG_TIMESTAMP_FORMAT = "yyyyMMddHHmmssSSS";
     public static final String US_DATE_SIZE10 = "MM/dd/yyyy";
     public static final String FILE_TIMESTAMP_FORMAT = "yyyyMMddHHmmss";
+    public static final String DIGITS10_yyyy_MM_dd_FORMAT = "yyyy-MM-dd";
 
     public static DateFormat digits8DtoYformatter = new SimpleDateFormat(DIGITS8_DTOY_FORMAT);
     public static DateFormat digits8YtoDformatter = new SimpleDateFormat(DIGITS8_yyyyMMdd_FORMAT);
@@ -45,6 +46,7 @@ public class DateUtil
     public static DateFormat rpgTimestampFormatter = new SimpleDateFormat(RPG_TIMESTAMP_FORMAT);
     public static DateFormat usDateSize10Formatter = new SimpleDateFormat(US_DATE_SIZE10);
     public static DateFormat fileTimestampFormatter = new SimpleDateFormat(FILE_TIMESTAMP_FORMAT);
+    public static DateFormat digits10YtoDformatter = new SimpleDateFormat(DIGITS10_yyyy_MM_dd_FORMAT);
 
     public static Date formatShortDate(String strValue) {
         try {
@@ -199,6 +201,29 @@ public class DateUtil
         	return null;
         }
         return result;
+    }
+
+    public static String formatYYYY_MM_DD(Date date) {
+        String result = null;
+        if (date == null)
+        {
+            date = getCurrentDate();
+        }
+        result = DateUtil.digits10YtoDformatter.format(date);
+        return result;
+    }
+
+    public static Date formatYYYY_MM_DD(String date) {
+        try {
+            Date result = null;
+            if (StringUtils.isNotBlank(date))
+            {
+                result = DateUtil.digits10YtoDformatter.parse(date);
+            }
+            return result;
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     /* ********************** */

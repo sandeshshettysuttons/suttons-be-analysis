@@ -1,5 +1,7 @@
 package au.com.suttons.notification.data.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -30,6 +32,10 @@ public class EmployeeEntity extends BaseEntity {
 
 	@Column(name = "STATUS", nullable=false, length=20)
 	private String status;
+
+	@Column(name = "NOTIFICATIONSENT", columnDefinition = "CHAR(1)")
+	@ColumnDefault("0")
+	private boolean notificationSent;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EMPLOYEE_COMPANY"))
@@ -89,6 +95,14 @@ public class EmployeeEntity extends BaseEntity {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public boolean isNotificationSent() {
+		return notificationSent;
+	}
+
+	public void setNotificationSent(boolean notificationSent) {
+		this.notificationSent = notificationSent;
 	}
 
 	public CompanyEntity getCompany() {

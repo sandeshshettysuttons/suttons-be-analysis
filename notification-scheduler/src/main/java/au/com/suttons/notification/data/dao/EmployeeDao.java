@@ -15,6 +15,10 @@ public class EmployeeDao extends BaseDao<EmployeeEntity>
         return this.entityManager.getReference(EmployeeEntity.class, id);
     }
 
+    public EmployeeEntity findOne(Long id) {
+        return this.entityManager.find(EmployeeEntity.class, id);
+    }
+
     public EmployeeEntity findByEmployeeNumber(String employeeNumber) {
         String sql = "SELECT e FROM EmployeeEntity e WHERE e.employeeNumber = :employeeNumber AND e.status = :activeStatus";
 
@@ -33,6 +37,20 @@ public class EmployeeDao extends BaseDao<EmployeeEntity>
 
     public List<EmployeeEntity> findAllActive() {
         String sql = "SELECT  e FROM EmployeeEntity e WHERE e.status = :activeStatus AND e.terminationDate IS NOT NULL ORDER BY e.terminationDate";
+
+        try {
+
+            return this.entityManager.createQuery(sql, EmployeeEntity.class)
+                    .setParameter("activeStatus", JobConstants.STATUS_ACTIVE)
+                    .getResultList();
+
+        } catch(NoResultException e) {
+            return null;
+        }
+    }
+
+    public List<EmployeeEntity> findActiveUnsent() {
+        String sql = "SELECT  e FROM EmployeeEntity e WHERE e.status = :activeStatus AND e.terminationDate IS NOT NULL AND e.notificationSent = FALSE ORDER BY e.terminationDate";
 
         try {
 

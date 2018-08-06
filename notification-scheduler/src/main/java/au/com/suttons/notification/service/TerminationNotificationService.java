@@ -42,13 +42,20 @@ public class TerminationNotificationService
 
         // Step 1 : Find mail recipients to whom notifications need to be sent
         List<MailRecipientEntity> mailRecipients = this.mailRecipientDao.findAllActive();
-        List<EmployeeEntity> allEmployees = this.employeeDao.findAllActive();
+
+        // Step 2 : Find employees who are being terminated
+        List<EmployeeEntity> allEmployees;
+        if (JobConstants.NOTIFICATION_TYPE_WEEKLY.equals(notificationType)) {
+            allEmployees = this.employeeDao.findActiveUnsent();
+        } else {
+            allEmployees = this.employeeDao.findAllActive();
+        }
 
         if (mailRecipients != null) {
 
             for (MailRecipientEntity mailRecipient: mailRecipients) {
 
-                // Step 2 : Find employees who are being terminated
+                // Step 3 : Filter employees based on mail recipient - GLOBAL / COMPANY
                 List<EmployeeEntity> employees = null;
 
                 if (JobConstants.MAIL_RECIPIENT_TYPE_GLOBAL.equals(mailRecipient.getType())) {
@@ -64,10 +71,10 @@ public class TerminationNotificationService
 
                     TerminationNotificationBean terminationNotification = new TerminationNotificationBean();
 
-                    // Step 3 : Group employees by time to termination date
+                    // Step 4 : Group employees by time to termination date
                     populateTerminationEmployeeDetails(notificationType, terminationNotification, employees);
 
-                    // Step 4 : Send email
+                    // Step 5 : Send email
                     if (CollectionUtils.isNotEmpty(terminationNotification.getEmployeeGroups())) {
 
                         terminationNotification.setMailRecipientName(mailRecipient.getName());
@@ -76,6 +83,12 @@ public class TerminationNotificationService
                         try {
                             this.emailService.sendTerminationNotification(terminationNotification);
                             this.emailService.saveEmailLogs(mailRecipient, terminationNotification, JobConstants.STATUS_SENT);
+
+                            // Set each Employee SENT flag to TRUE
+                            if (JobConstants.NOTIFICATION_TYPE_WEEKLY.equals(notificationType)) {
+                                setEmployeeSentFlag(terminationNotification);
+                            }
+
 
                         } catch (Exception ex) {
                             logger.error("Exception while attempting to send termination notification.", ex);
@@ -166,6 +179,27 @@ public class TerminationNotificationService
         }
 
         return filteredList;
+    }
+
+    private void setEmployeeSentFlag(TerminationNotificationBean terminationNotification) {
+
+        if (terminationNotification.getEmployeeGroups() != null) {
+
+            for (EmployeeGroupBean employeeGroup : terminationNotification.getEmployeeGroups()) {
+
+                if (employeeGroup.getEmployees() != null) {
+
+                    for (EmployeeBean employee : employeeGroup.getEmployees()) {
+                        EmployeeEntity employeeEntity = this.employeeDao.findOne(employee.getId());
+                        employeeEntity.setNotificationSent(true);
+                    }
+
+                }
+
+            }
+
+        }
+
     }
 
 }
