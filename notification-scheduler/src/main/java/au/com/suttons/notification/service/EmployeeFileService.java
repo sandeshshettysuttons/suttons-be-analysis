@@ -121,6 +121,12 @@ public class EmployeeFileService
 
         if (employee == null) {
             employee = new EmployeeEntity();
+            employee.setNotificationSent(false);
+
+        } else if ( (employee.getTerminationDate() != null && !employee.getTerminationDate().equals(employeeFileDetail.getTerminationDate()))
+                    || (employee.getTerminationDate() == null && employeeFileDetail.getTerminationDate() != null) ) {
+
+            employee.setNotificationSent(false);
         }
 
         employee.setEmployeeNumber(employeeFileDetail.getEmployeeNumber());
@@ -130,7 +136,6 @@ public class EmployeeFileService
         employee.setPosition(employeeFileDetail.getPosition());
         employee.setTerminationDate(employeeFileDetail.getTerminationDate());
         employee.setStatus(JobConstants.STATUS_ACTIVE);
-        employee.setNotificationSent(false);
 
         employee.setLastUpdatedBy(employeeFileDetail.getLastUpdatedBy());
 
