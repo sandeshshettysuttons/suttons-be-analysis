@@ -62,7 +62,7 @@ public class EmailService
 
         if (terminationNotification != null) {
 
-            String subject = "Employees Termination Notification";
+            String subject = "Employees Termination / Transfer Notification";
             String folder = getMailTemplatesFolder();
             Reader templateReader = new BufferedReader(new FileReader(folder + TERMINATION_NOTIFN_TEMPLATE));
 
