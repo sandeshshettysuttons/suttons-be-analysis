@@ -101,7 +101,7 @@ public class EmployeeFileService
             entity.setDescription(employeeDetail.getDescription());
             entity.setPosition(employeeDetail.getPosition());
             if (StringUtils.isNotBlank(employeeDetail.getTerminationDate())) {
-                entity.setTerminationDate(DateUtil.parseStringToDate(employeeDetail.getTerminationDate()));
+                entity.setTerminationDate(DateUtil.formatYYYY_MM_DD(employeeDetail.getTerminationDate()));
             }
             entity.setTerminationReason(employeeDetail.getTerminationReason());
             entity.setTerminationDescription(employeeDetail.getTerminationDescription());
