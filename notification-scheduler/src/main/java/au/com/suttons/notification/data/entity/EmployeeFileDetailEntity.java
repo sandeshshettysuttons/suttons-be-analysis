@@ -31,6 +31,15 @@ public class EmployeeFileDetailEntity extends BaseEntity {
 	@Temporal(TemporalType.DATE)
 	private Date terminationDate;
 
+	@Column(name = "TERMINATIONREASON", length=20)
+	private String terminationReason;
+
+	@Column(name = "TERMINATIONDESCRIPTION", length=100)
+	private String terminationDescription;
+
+	@Column(name = "COMMENT", length=200)
+	private String comment;
+
 	@Column(name = "STATUS", nullable=false, length=20)
 	private String status;
 
@@ -92,6 +101,30 @@ public class EmployeeFileDetailEntity extends BaseEntity {
 
 	public void setTerminationDate(Date terminationDate) {
 		this.terminationDate = terminationDate;
+	}
+
+	public String getTerminationReason() {
+		return terminationReason;
+	}
+
+	public void setTerminationReason(String terminationReason) {
+		this.terminationReason = terminationReason;
+	}
+
+	public String getTerminationDescription() {
+		return terminationDescription;
+	}
+
+	public void setTerminationDescription(String terminationDescription) {
+		this.terminationDescription = terminationDescription;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public String getStatus() {

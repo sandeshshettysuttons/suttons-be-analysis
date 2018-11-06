@@ -12,6 +12,9 @@ public class EmployeeFileDetailBean
 	private String description;
 	private String position;
 	private String terminationDate;
+	private String terminationReason;
+	private String terminationDescription;
+	private String comment;
 	private String status;
 
 	public String getEmployeeNumber() {
@@ -68,6 +71,30 @@ public class EmployeeFileDetailBean
 
 	public void setTerminationDate(String terminationDate) {
 		this.terminationDate = terminationDate;
+	}
+
+	public String getTerminationReason() {
+		return terminationReason;
+	}
+
+	public void setTerminationReason(String terminationReason) {
+		this.terminationReason = terminationReason;
+	}
+
+	public String getTerminationDescription() {
+		return terminationDescription;
+	}
+
+	public void setTerminationDescription(String terminationDescription) {
+		this.terminationDescription = terminationDescription;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public String getStatus() {

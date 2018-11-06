@@ -160,6 +160,9 @@ public class TerminationNotificationService
         bean.setPosition(entity.getPosition());
         bean.setTerminationDate(
                 DateUtil.formatDateToString(entity.getTerminationDate()));
+        bean.setTerminationReason(entity.getTerminationReason());
+        bean.setTerminationDescription(entity.getTerminationDescription());
+        bean.setComment(entity.getComment());
         bean.setStatus(entity.getStatus());
 
         return bean;

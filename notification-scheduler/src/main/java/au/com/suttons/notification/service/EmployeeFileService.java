@@ -101,8 +101,11 @@ public class EmployeeFileService
             entity.setDescription(employeeDetail.getDescription());
             entity.setPosition(employeeDetail.getPosition());
             if (StringUtils.isNotBlank(employeeDetail.getTerminationDate())) {
-                entity.setTerminationDate(DateUtil.formatYYYY_MM_DD(employeeDetail.getTerminationDate()));
+                entity.setTerminationDate(DateUtil.parseStringToDate(employeeDetail.getTerminationDate()));
             }
+            entity.setTerminationReason(employeeDetail.getTerminationReason());
+            entity.setTerminationDescription(employeeDetail.getTerminationDescription());
+            entity.setComment(employeeDetail.getComment());
             entity.setStatus(employeeDetail.getStatus());
 
             entity.setEmployeeFile(employeeFile);
@@ -135,6 +138,9 @@ public class EmployeeFileService
         employee.setDescription(employeeFileDetail.getDescription());
         employee.setPosition(employeeFileDetail.getPosition());
         employee.setTerminationDate(employeeFileDetail.getTerminationDate());
+        employee.setTerminationReason(employeeFileDetail.getTerminationReason());
+        employee.setTerminationDescription(employeeFileDetail.getTerminationDescription());
+        employee.setComment(employeeFileDetail.getComment());
         employee.setStatus(JobConstants.STATUS_ACTIVE);
 
         employee.setLastUpdatedBy(employeeFileDetail.getLastUpdatedBy());
@@ -172,8 +178,16 @@ public class EmployeeFileService
 
     private void moveFileToImportedDir(Path file) {
 
+        String originalFileName = file.getFileName().toString();
+        String newFileName =
+                new StringBuffer(originalFileName.substring(0 , originalFileName.lastIndexOf('.')))
+                        .append("_")
+                        .append(DateUtil.getFileTimestamp())
+                        .append(originalFileName.substring(originalFileName.lastIndexOf('.')))
+                        .toString();
+
         Path importedDir = Paths.get(
-                FileUtil.getImportedEmployeeFilesLocation(), file.getFileName().toString());
+                FileUtil.getImportedEmployeeFilesLocation(), newFileName);
 
         Path temp = null;
         try {
@@ -190,8 +204,16 @@ public class EmployeeFileService
 
     private void moveFileToErrorDir(Path file) {
 
+        String originalFileName = file.getFileName().toString();
+        String newFileName =
+                new StringBuffer(originalFileName.substring(0 , originalFileName.lastIndexOf('.')))
+                        .append("_")
+                        .append(DateUtil.getFileTimestamp())
+                        .append(originalFileName.substring(originalFileName.lastIndexOf('.')))
+                        .toString();
+
         Path importedDir = Paths.get(
-                FileUtil.getErrorEmployeeFilesLocation(), file.getFileName().toString());
+                FileUtil.getErrorEmployeeFilesLocation(), newFileName);
 
         Path temp = null;
         try {

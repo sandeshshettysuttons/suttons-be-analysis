@@ -14,7 +14,7 @@
             #foreach( $employeeGroup in $terminationNotification.getEmployeeGroups() )
 
                 <tr style="font-weight: bold;">
-                    <td colspan="6">$employeeGroup.getDescription()</td>
+                    <td colspan="8">$employeeGroup.getDescription()</td>
                 </tr>
                 <tr style="font-weight: bold;">
                     <td style="border-right: 20px solid white;">Employee ID</td>
@@ -23,6 +23,8 @@
                     <td style="border-right: 20px solid white;">Description</td>
                     <td style="border-right: 20px solid white;">Position</td>
                     <td style="border-right: 20px solid white;">Termination Date</td>
+                    <td style="border-right: 20px solid white;">Termination Reason</td>
+                    <td style="border-right: 20px solid white;">Comment</td>
                 </tr>
 
                 #foreach( $employee in $employeeGroup.getEmployees() )
@@ -33,11 +35,13 @@
                         <td>$employee.getDescription()</td>
                         <td>$employee.getPosition()</td>
                         <td>$employee.getTerminationDate()</td>
+                        <td>$employee.getTerminationDescription()</td>
+                        <td>$employee.getComment()</td>
                     </tr>
                 #end
 
                 <tr>
-                    <td colspan="6">&nbsp;</td>
+                    <td colspan="8">&nbsp;</td>
                 </tr>
 
             #end

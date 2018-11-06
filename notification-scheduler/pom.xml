@@ -199,6 +199,7 @@
                 </property>
             </activation>
             <properties>
+                <build.profile.id>dev</build.profile.id>
                 <context.path>notification-scheduler</context.path>
                 <reports.datasource>java:/jdbc/NotificationDataSource</reports.datasource>
             </properties>
@@ -217,6 +218,7 @@
                 </property>
             </activation>
             <properties>
+                <build.profile.id>uat</build.profile.id>
                 <context.path>notification-scheduler</context.path>
                 <reports.datasource>java:/jdbc/NotificationDataSource</reports.datasource>
             </properties>
@@ -235,6 +237,7 @@
                 </property>
             </activation>
             <properties>
+                <build.profile.id>prod</build.profile.id>
                 <context.path>notification-scheduler</context.path>
                 <reports.datasource>java:/jdbc/NotificationDataSource</reports.datasource>
             </properties>
