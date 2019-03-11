@@ -156,6 +156,8 @@ public class TerminationNotificationService
         bean.setEmployeeNumber(entity.getEmployeeNumber());
         bean.setFirstName(entity.getFirstName());
         bean.setLastName(entity.getLastName());
+        bean.setPreferredName(entity.getPreferredName());
+        bean.setReportName(entity.getReportName());
         bean.setDescription(entity.getDescription());
         bean.setPosition(entity.getPosition());
         bean.setTerminationDate(

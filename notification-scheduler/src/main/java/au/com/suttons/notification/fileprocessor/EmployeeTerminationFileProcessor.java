@@ -16,7 +16,7 @@ public class EmployeeTerminationFileProcessor extends CsvHandler implements File
 
 		ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
 		strategy.setType(EmployeeFileDetailBean.class);
-		String[] columns = new String[] {"companyCode","description","status","employeeNumber","firstName","lastName","position","terminationDate","terminationReason","terminationDescription","comment"};
+		String[] columns = new String[] {"companyCode","description","status","employeeNumber","firstName","lastName","preferredName","reportName","position","terminationDate","terminationReason","terminationDescription","comment"};
 		strategy.setColumnMapping(columns);
 		return strategy;
 	}

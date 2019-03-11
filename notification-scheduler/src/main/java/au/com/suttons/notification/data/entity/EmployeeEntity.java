@@ -20,6 +20,12 @@ public class EmployeeEntity extends BaseEntity {
 	@Column(name = "LASTNAME", length=50)
 	private String lastName;
 
+	@Column(name = "PREFERREDNAME", length=50)
+	private String preferredName;
+
+	@Column(name = "REPORTNAME", length=50)
+	private String reportName;
+
 	@Column(name = "DESCRIPTION", length=100)
 	private String description;
 
@@ -72,6 +78,22 @@ public class EmployeeEntity extends BaseEntity {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getPreferredName() {
+		return preferredName;
+	}
+
+	public void setPreferredName(String preferredName) {
+		this.preferredName = preferredName;
+	}
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
 	}
 
 	public String getDescription() {

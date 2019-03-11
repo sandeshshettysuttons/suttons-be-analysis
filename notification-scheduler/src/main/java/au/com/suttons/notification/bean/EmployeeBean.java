@@ -8,6 +8,8 @@ public class EmployeeBean
 	private String employeeNumber;
 	private String firstName;
 	private String lastName;
+	private String preferredName;
+	private String reportName;
 	private String description;
 	private String position;
 	private String terminationDate;
@@ -46,6 +48,22 @@ public class EmployeeBean
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getPreferredName() {
+		return preferredName;
+	}
+
+	public void setPreferredName(String preferredName) {
+		this.preferredName = preferredName;
+	}
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
 	}
 
 	public String getDescription() {

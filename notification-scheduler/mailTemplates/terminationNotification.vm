@@ -20,6 +20,8 @@
                     <td style="border-right: 20px solid white;">Employee ID</td>
                     <td style="border-right: 20px solid white;">First name</td>
                     <td style="border-right: 20px solid white;">Last name</td>
+                    <td style="border-right: 20px solid white;">Preferred name</td>
+                    <td style="border-right: 20px solid white;">Report name</td>
                     <td style="border-right: 20px solid white;">Description</td>
                     <td style="border-right: 20px solid white;">Position</td>
                     <td style="border-right: 20px solid white;">Termination Date</td>
@@ -32,6 +34,8 @@
                         <td>$employee.getEmployeeNumber()</td>
                         <td>$employee.getFirstName()</td>
                         <td>$employee.getLastName()</td>
+                        <td>$employee.getPreferredName()</td>
+                        <td>$employee.getReportName()</td>
                         <td>$employee.getDescription()</td>
                         <td>$employee.getPosition()</td>
                         <td>$employee.getTerminationDate()</td>

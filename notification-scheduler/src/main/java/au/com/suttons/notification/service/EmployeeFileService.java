@@ -97,6 +97,8 @@ public class EmployeeFileService
             entity.setEmployeeNumber(employeeDetail.getEmployeeNumber());
             entity.setFirstName(employeeDetail.getFirstName());
             entity.setLastName(employeeDetail.getLastName());
+            entity.setPreferredName(employeeDetail.getPreferredName());
+            entity.setReportName(employeeDetail.getReportName());
             entity.setCompanyCode(employeeDetail.getCompanyCode());
             entity.setDescription(employeeDetail.getDescription());
             entity.setPosition(employeeDetail.getPosition());
@@ -135,6 +137,8 @@ public class EmployeeFileService
         employee.setEmployeeNumber(employeeFileDetail.getEmployeeNumber());
         employee.setFirstName(employeeFileDetail.getFirstName());
         employee.setLastName(employeeFileDetail.getLastName());
+        employee.setPreferredName(employeeFileDetail.getPreferredName());
+        employee.setReportName(employeeFileDetail.getReportName());
         employee.setDescription(employeeFileDetail.getDescription());
         employee.setPosition(employeeFileDetail.getPosition());
         employee.setTerminationDate(employeeFileDetail.getTerminationDate());
