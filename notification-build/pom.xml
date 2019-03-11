@@ -17,7 +17,7 @@
     </modules>
 
     <properties>
-		<version.number>1.2.0.0</version.number>
+		<version.number>1.3.0.0</version.number>
     </properties>
 
     <build>
