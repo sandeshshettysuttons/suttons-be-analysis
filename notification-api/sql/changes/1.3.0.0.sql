@@ -1,4 +1,4 @@
-INSERT INTO notification.versionhistory VALUES ('1.2.0.0', CURRENT_TIMESTAMP);
+INSERT INTO notification.versionhistory VALUES ('1.3.0.0', CURRENT_TIMESTAMP);
 
 ALTER TABLE notification.employeefiledetail
   ADD COLUMN preferredName          VARCHAR(50) NULL DEFAULT NULL AFTER lastName,
