@@ -16,7 +16,7 @@
 
     <properties>
         <org.slf4j-version>1.7.12</org.slf4j-version>
-        <hibernate-version>4.3.10.Final</hibernate-version>
+        <hibernate-version>5.4.24.Final</hibernate-version>
         <app.build.timestamp>${maven.build.timestamp}</app.build.timestamp>
         <maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
